@@ -15,6 +15,7 @@ class _QuickMathPageState extends State<QuickMathPage>
   int _score = 0;
   int _bestScore = 0;
   int _correctAnswer = 0;
+  String? _explanation;
   String _question = '';
   List<int> _options = [];
   late AnimationController _controller;
@@ -23,7 +24,9 @@ class _QuickMathPageState extends State<QuickMathPage>
   late AnimationController _hintAnimController;
   late Animation<double> _hintScaleAnimation;
 
-  Timer? _hintTimer;
+  int _lastTimerDuration = 10;
+  bool hintStarted = false;
+  bool _isBooleanQuestion = false;
 
   @override
   void initState() {
@@ -33,12 +36,31 @@ class _QuickMathPageState extends State<QuickMathPage>
       duration: Duration(seconds: 10),
       vsync: this,
     )..addStatusListener((status) {
-      if (status == AnimationStatus.completed) {
-        _goToResult();
-      }
-    });
+        if (status == AnimationStatus.completed) {
+          _goToResult(
+            wasWrong: true,
+            question: _question,
+            yourAnswer: _isBooleanQuestion
+                ? "No Answer"
+                : "No Answer",
+            correctAnswer: _isBooleanQuestion
+                ? (_correctAnswer == 1 ? "True" : "False")
+                : _correctAnswer.toString(),
+            explanation: _explanation,
+          );
+        }
+      });
 
     _animation = Tween<double>(begin: 1.0, end: 0.0).animate(_controller);
+    _animation.addListener(() {
+      if (!hintStarted) {
+        final timeLeft = _controller.duration!.inSeconds * _animation.value;
+        if (timeLeft <= 5) {
+          hintStarted = true;
+          _hintAnimController.forward();
+        }
+      }
+    });
 
     _hintAnimController = AnimationController(
       vsync: this,
@@ -52,7 +74,7 @@ class _QuickMathPageState extends State<QuickMathPage>
     _hintAnimController.addStatusListener((status) {
       if (status == AnimationStatus.completed) {
         _hintAnimController.reverse();
-      } else if (status == AnimationStatus.dismissed) {
+      } else if (status == AnimationStatus.dismissed && _controller.isAnimating) {
         _hintAnimController.forward();
       }
     });
@@ -69,67 +91,132 @@ class _QuickMathPageState extends State<QuickMathPage>
   }
 
   void _generateQuestion() {
+    int timerSeconds;
+    if (_score < 10)
+      timerSeconds = 10;
+    else if (_score < 20)
+      timerSeconds = 9;
+    else if (_score < 30)
+      timerSeconds = 8;
+    else if (_score < 40)
+      timerSeconds = 7;
+    else if (_score < 50)
+      timerSeconds = 6;
+    else
+      timerSeconds = 5;
+
+    if (timerSeconds != _lastTimerDuration) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(
+              '🔥 You’re doing great! Timer now: $timerSeconds seconds!',
+              style: TextStyle(color: Colors.white),
+            ),
+            backgroundColor: Colors.deepPurple,
+            duration: Duration(seconds: 2),
+          ),
+        );
+      });
+      _lastTimerDuration = timerSeconds;
+    }
+
+    _controller.duration = Duration(seconds: timerSeconds);
+    _controller.reset();
+    _controller.forward();
+
+    hintStarted = false;
+    _hintAnimController.reset();
+    _hintAnimController.stop();
+
     int a = _random.nextInt(10) + 1;
     int b = _random.nextInt(10) + 1;
-    int type = _random.nextInt(4);
     int answer;
     String q;
+    String explanation;
+    int type;
+
+    if (_score < 10)
+      type = 0;
+    else if (_score < 20)
+      type = 1;
+    else
+      type = _random.nextInt(5);
 
     if (type == 0) {
-      answer = a + b;
+      _isBooleanQuestion = false;
       int style = _random.nextInt(3);
+      answer = a + b;
       if (style == 0) {
         q = "? + $b = $answer";
+        explanation = "$answer - $b = $a";
         answer = a;
       } else if (style == 1) {
         q = "$a + ? = $answer";
+        explanation = "$answer - $a = $b";
         answer = b;
       } else {
         q = "$a + $b = ?";
-        answer = a + b;
+        explanation = "$a + $b = ${a + b}";
       }
     } else if (type == 1) {
+      _isBooleanQuestion = false;
       int result = (a > b) ? a - b : b - a;
       if (_random.nextBool()) {
         q = "? - $b = $result";
         answer = b + result;
+        explanation = "$answer - $b = $result";
       } else if (_random.nextBool()) {
         q = "$a - ? = $result";
         answer = a - result;
+        explanation = "$a - $answer = $result";
       } else {
         q = "$a - $b = ?";
         answer = a - b;
+        explanation = "$a - $b = ${a - b}";
       }
     } else if (type == 2) {
+      _isBooleanQuestion = false;
       answer = a * b;
       q = "$a × $b = ?";
-    } else {
+      explanation = "$a × $b = $answer";
+    } else if (type == 3) {
+      _isBooleanQuestion = false;
       answer = a;
       int product = a * b;
       q = "$product ÷ $b = ?";
+      explanation = "$product ÷ $b = $answer";
+    } else {
+      _isBooleanQuestion = true;
+      int leftA = _random.nextInt(10) + 1;
+      int leftB = _random.nextInt(10) + 1;
+      int rightA = _random.nextInt(10) + 1;
+      int rightB = _random.nextInt(10) + 1;
+
+      int leftVal = leftA + leftB;
+      int rightVal = rightA + rightB;
+
+      bool useGreater = _random.nextBool();
+      bool isCorrect = useGreater ? (leftVal > rightVal) : (leftVal < rightVal);
+
+      q = "$leftA + $leftB ${useGreater ? ">" : "<"} $rightA + $rightB";
+      answer = isCorrect ? 1 : 0;
+      explanation = "$leftVal ${useGreater ? ">" : "<"} $rightVal is ${isCorrect ? "True" : "False"}";
+      _options = [1, 0];
     }
 
-    Set<int> optionSet = {answer};
-    while (optionSet.length < 4) {
-      optionSet.add(answer + _random.nextInt(10) - 5);
+    if (type != 4) {
+      Set<int> optionSet = {answer};
+      while (optionSet.length < 4) {
+        optionSet.add(answer + _random.nextInt(10) - 5);
+      }
+      _options = optionSet.toList()..shuffle();
     }
-
-    _options = optionSet.toList()..shuffle();
 
     setState(() {
       _question = q;
       _correctAnswer = answer;
-    });
-
-    _controller.reset();
-    _controller.forward();
-
-    _hintTimer?.cancel();
-    _hintAnimController.stop();
-    _hintAnimController.reset();
-
-    _hintTimer = Timer(Duration(seconds: 5), () {
-      _hintAnimController.forward();
+      _explanation = explanation;
     });
   }
 
@@ -143,10 +230,13 @@ class _QuickMathPageState extends State<QuickMathPage>
       _goToResult(
         wasWrong: true,
         question: _question,
-        yourAnswer: selected.toString(),
-        correctAnswer: _correctAnswer.toString(),
-        explanation:
-            'Because $_question is solved as $_correctAnswer = $_question logic here.',
+        yourAnswer: _isBooleanQuestion
+            ? (selected == 1 ? "True" : "False")
+            : selected.toString(),
+        correctAnswer: _isBooleanQuestion
+            ? (_correctAnswer == 1 ? "True" : "False")
+            : _correctAnswer.toString(),
+        explanation: _explanation,
       );
     }
   }
@@ -168,16 +258,15 @@ class _QuickMathPageState extends State<QuickMathPage>
     Navigator.pushReplacement(
       context,
       MaterialPageRoute(
-        builder:
-            (_) => ResultPage(
-              score: _score,
-              bestScore: max(_score, bestScore),
-              wasWrong: wasWrong,
-              question: question,
-              yourAnswer: yourAnswer,
-              correctAnswer: correctAnswer,
-              explanation: explanation,
-            ),
+        builder: (_) => ResultPage(
+          score: _score,
+          bestScore: max(_score, bestScore),
+          wasWrong: wasWrong,
+          question: question,
+          yourAnswer: yourAnswer,
+          correctAnswer: correctAnswer,
+          explanation: explanation,
+        ),
       ),
     );
   }
@@ -186,7 +275,6 @@ class _QuickMathPageState extends State<QuickMathPage>
   void dispose() {
     _controller.dispose();
     _hintAnimController.dispose();
-    _hintTimer?.cancel();
     super.dispose();
   }
 
@@ -203,33 +291,21 @@ class _QuickMathPageState extends State<QuickMathPage>
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Expanded(
-                        child: Text(
-                          'Quick Maths',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 28,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ),
                       Row(
                         children: [
-                          Icon(
-                            Icons.emoji_events,
-                            color: Colors.amber,
-                            size: 24,
-                          ),
-                          SizedBox(width: 4),
-                          Text(
-                            '$_bestScore',
-                            style: TextStyle(
-                              color: Colors.amber,
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
+                          Icon(Icons.psychology, color: Colors.white, size: 28),
+                          SizedBox(width: 6),
+                          Text('$_score', style: TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold)),
+                        ],
+                      ),
+                      Text('Quick Maths', style: TextStyle(color: Colors.white, fontSize: 30, fontWeight: FontWeight.bold)),
+                      Row(
+                        children: [
+                          Icon(Icons.emoji_events, color: Colors.amber, size: 28),
+                          SizedBox(width: 6),
+                          Text('$_bestScore', style: TextStyle(color: Colors.amber, fontSize: 20, fontWeight: FontWeight.bold)),
                         ],
                       ),
                     ],
@@ -243,10 +319,7 @@ class _QuickMathPageState extends State<QuickMathPage>
                         child: AnimatedBuilder(
                           animation: _animation,
                           builder: (context, child) {
-                            Color barColor =
-                                _animation.value > 0.3
-                                    ? Colors.white
-                                    : Colors.red;
+                            Color barColor = _animation.value > 0.3 ? Colors.white : Colors.red;
                             return Container(
                               height: 20,
                               decoration: BoxDecoration(
@@ -270,19 +343,19 @@ class _QuickMathPageState extends State<QuickMathPage>
                     ],
                   ),
                   SizedBox(height: 30),
-                  Text(
-                    _question,
-                    style: TextStyle(color: Colors.white, fontSize: 26),
-                  ),
+                  Text(_question, style: TextStyle(color: Colors.white, fontSize: 26)),
                   SizedBox(height: 30),
-                  ..._options.map(
-                    (opt) => Padding(
+                  ..._options.map((opt) {
+                    String label = (_score >= 20 && _options.length == 2)
+                        ? (opt == 1 ? "True" : "False")
+                        : opt.toString();
+                    return Padding(
                       padding: const EdgeInsets.symmetric(vertical: 8.0),
                       child: SizedBox(
                         width: double.infinity,
                         child: ElevatedButton(
                           onPressed: () => _handleAnswer(opt),
-                          child: Text('$opt', style: TextStyle(fontSize: 20)),
+                          child: Text(label, style: TextStyle(fontSize: 20)),
                           style: ElevatedButton.styleFrom(
                             padding: EdgeInsets.symmetric(vertical: 14),
                             backgroundColor: Colors.white,
@@ -293,8 +366,8 @@ class _QuickMathPageState extends State<QuickMathPage>
                           ),
                         ),
                       ),
-                    ),
-                  ),
+                    );
+                  }),
                 ],
               ),
             ),
