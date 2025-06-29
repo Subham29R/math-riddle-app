@@ -241,32 +241,34 @@ class _QuickMathPageState extends State<QuickMathPage>
     }
   }
 
-  void _goToResult({
-    bool wasWrong = false,
-    String? question,
-    String? yourAnswer,
-    String? correctAnswer,
-    String? explanation,
-  }) async {
-    _controller.stop();
-    final prefs = await SharedPreferences.getInstance();
-    int bestScore = prefs.getInt('best_score') ?? 0;
-    if (_score > bestScore) {
-      await prefs.setInt('best_score', _score);
-    }
+ void _goToResult({
+  bool wasWrong = false,
+  String? question,
+  String? yourAnswer,
+  String? correctAnswer,
+  String? explanation,
+}) async {
+  _controller.stop();
+  final prefs = await SharedPreferences.getInstance();
+  int previousBest = prefs.getInt('best_score') ?? 0;
+
+  if (_score > previousBest) {
+    await prefs.setInt('best_score', _score);
+  }
 
     Navigator.pushReplacement(
       context,
       MaterialPageRoute(
-        builder: (_) => ResultPage(
-          score: _score,
-          bestScore: max(_score, bestScore),
-          wasWrong: wasWrong,
-          question: question,
-          yourAnswer: yourAnswer,
-          correctAnswer: correctAnswer,
-          explanation: explanation,
-        ),
+        builder:
+            (_) => ResultPage(
+              score: _score,
+              bestScore: max(_score, bestScore),
+              wasWrong: wasWrong,
+              question: question,
+              yourAnswer: yourAnswer,
+              correctAnswer: correctAnswer,
+              explanation: explanation,
+            ),
       ),
     );
   }

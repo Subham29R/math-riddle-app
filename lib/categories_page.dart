@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 // import 'quick_math_page.dart';
+import 'package:quiz_app/riddles/riddles_page.dart';
 import 'quick_math_countdown.dart';
 import 'animated_play_button.dart';
-
 
 class CategoriesPage extends StatelessWidget {
   @override
@@ -103,17 +103,16 @@ class CategoriesPage extends StatelessWidget {
                       SizedBox(
                         width: double.infinity,
                         child: AnimatedPlayButton(
-  onPressed: () {
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => QuickMathCountdownPage(),
-      ),
-    );
-  },
-  color: Colors.green,
-),
-
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => QuickMathCountdownPage(),
+                              ),
+                            );
+                          },
+                          color: Colors.green,
+                        ),
                       ),
                     ],
                   ),
@@ -174,18 +173,14 @@ class CategoriesPage extends StatelessWidget {
                       SizedBox(height: 10),
                       SizedBox(
                         width: double.infinity,
-                        child: ElevatedButton.icon(
-                          onPressed: () {},
-                          icon: Icon(Icons.play_arrow, size: 20),
-                          label: Text('Play'),
-                          style: ElevatedButton.styleFrom(
-                            foregroundColor: Colors.purple,
-                            backgroundColor: Colors.white,
-                            padding: EdgeInsets.symmetric(vertical: 14),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(12),
-                            ),
-                          ),
+                        child: AnimatedPlayButton(
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (_) => RiddlesPage()),
+                            );
+                          },
+                          color: Colors.purple,
                         ),
                       ),
                     ],
@@ -247,18 +242,9 @@ class CategoriesPage extends StatelessWidget {
                       SizedBox(height: 10),
                       SizedBox(
                         width: double.infinity,
-                        child: ElevatedButton.icon(
+                        child: AnimatedPlayButton(
                           onPressed: () {},
-                          icon: Icon(Icons.play_arrow, size: 20),
-                          label: Text('Play'),
-                          style: ElevatedButton.styleFrom(
-                            foregroundColor: Colors.blue,
-                            backgroundColor: Colors.white,
-                            padding: EdgeInsets.symmetric(vertical: 14),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(12),
-                            ),
-                          ),
+                          color: Colors.blue,
                         ),
                       ),
                     ],
