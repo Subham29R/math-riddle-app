@@ -37,7 +37,6 @@ class HomePage extends StatelessWidget {
                           color: Colors.yellow,
                         ),
                       ),
-                      // SizedBox(width: 5),
                       Text(
                         'Riddles',
                         style: TextStyle(
@@ -50,96 +49,123 @@ class HomePage extends StatelessWidget {
                   ),
                 ),
                 SizedBox(height: 40),
-
-                ElevatedButton.icon(
+                _buildAnimatedButton(
                   onPressed: () {},
-                  icon: Icon(Icons.play_circle_fill, color: Colors.white),
-                  label: Text('Play', style: buttonTextStyle),
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.green,
-                    minimumSize: Size(double.infinity, 60),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(15),
-                    ),
-                  ),
+                  icon: Icons.play_circle_fill,
+                  label: 'Play',
+                  color: Colors.green,
                 ),
                 SizedBox(height: 15),
-
-                ElevatedButton.icon(
+                _buildAnimatedButton(
                   onPressed: () {},
-                  icon: Icon(Icons.calendar_today, color: Colors.white),
-                  label: Text('Daily Challenge', style: buttonTextStyle),
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.blue,
-                    minimumSize: Size(double.infinity, 60),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(15),
-                    ),
-                  ),
+                  icon: Icons.calendar_today,
+                  label: 'Daily Challenge',
+                  color: Colors.blue,
                 ),
                 SizedBox(height: 15),
-
-                ElevatedButton.icon(
+                _buildAnimatedButton(
                   onPressed: () {
                     Navigator.push(
                       context,
                       MaterialPageRoute(builder: (context) => CategoriesPage()),
                     );
                   },
-                  icon: Icon(Icons.category, color: Colors.white),
-                  label: Text('Categories', style: buttonTextStyle),
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.purple,
-                    minimumSize: Size(double.infinity, 60),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(15),
-                    ),
-                  ),
-                ),
-
-                SizedBox(height: 15),
-
-                ElevatedButton.icon(
-                  onPressed: () {},
-                  icon: Icon(Icons.lock, color: Colors.white),
-                  label: Text('Premium', style: buttonTextStyle),
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.amber,
-                    minimumSize: Size(double.infinity, 60),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(15),
-                    ),
-                  ),
+                  icon: Icons.category,
+                  label: 'Categories',
+                  color: Colors.purple,
                 ),
                 SizedBox(height: 15),
-
-                ElevatedButton.icon(
+                _buildAnimatedButton(
                   onPressed: () {},
-                  icon: Icon(Icons.settings, color: Colors.white),
-                  label: Text('Settings', style: buttonTextStyle),
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.grey.shade800,
-                    minimumSize: Size(double.infinity, 60),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(15),
-                    ),
-                  ),
+                  icon: Icons.lock,
+                  label: 'Premium',
+                  color: Colors.amber,
                 ),
                 SizedBox(height: 15),
-
-                ElevatedButton.icon(
+                _buildAnimatedButton(
                   onPressed: () {},
-                  icon: Icon(Icons.exit_to_app, color: Colors.white),
-                  label: Text('Exit', style: buttonTextStyle),
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.red,
-                    minimumSize: Size(double.infinity, 60),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(15),
-                    ),
-                  ),
+                  icon: Icons.settings,
+                  label: 'Settings',
+                  color: Colors.grey.shade800,
+                ),
+                SizedBox(height: 15),
+                _buildAnimatedButton(
+                  onPressed: () {},
+                  icon: Icons.exit_to_app,
+                  label: 'Exit',
+                  color: Colors.red,
                 ),
               ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildAnimatedButton({
+    required VoidCallback onPressed,
+    required IconData icon,
+    required String label,
+    required Color color,
+  }) {
+    return _TapEffectButton(
+      onPressed: onPressed,
+      icon: icon,
+      label: label,
+      color: color,
+      textStyle: buttonTextStyle,
+    );
+  }
+}
+
+class _TapEffectButton extends StatefulWidget {
+  final VoidCallback onPressed;
+  final IconData icon;
+  final String label;
+  final Color color;
+  final TextStyle textStyle;
+
+  const _TapEffectButton({
+    required this.onPressed,
+    required this.icon,
+    required this.label,
+    required this.color,
+    required this.textStyle,
+  });
+
+  @override
+  State<_TapEffectButton> createState() => _TapEffectButtonState();
+}
+
+class _TapEffectButtonState extends State<_TapEffectButton> {
+  double _scale = 1.0;
+
+  void _onTapDown(_) => setState(() => _scale = 0.95);
+  void _onTapUp(_) => setState(() => _scale = 1.0);
+  void _onTapCancel() => setState(() => _scale = 1.0);
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: widget.onPressed,
+      onTapDown: _onTapDown,
+      onTapUp: _onTapUp,
+      onTapCancel: _onTapCancel,
+      child: AnimatedScale(
+        scale: _scale,
+        duration: Duration(milliseconds: 120),
+        child: AbsorbPointer(
+          child: ElevatedButton.icon(
+            onPressed: () {}, // keep non-null so color shows
+            icon: Icon(widget.icon, color: Colors.white),
+            label: Text(widget.label, style: widget.textStyle),
+            style: ElevatedButton.styleFrom(
+              backgroundColor: widget.color,
+              minimumSize: Size(double.infinity, 60),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(15),
+              ),
             ),
           ),
         ),
