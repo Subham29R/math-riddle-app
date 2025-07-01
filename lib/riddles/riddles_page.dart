@@ -130,7 +130,7 @@ class _RiddlesPageState extends State<RiddlesPage> {
                             },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: isCurrent
-                            ? Colors.orange
+                            ? Colors.red
                             : isCompleted
                                 ? Colors.green
                                 : Colors.grey.shade300,
