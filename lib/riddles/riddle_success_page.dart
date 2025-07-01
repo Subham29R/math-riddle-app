@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:confetti/confetti.dart';
 import 'riddle_quiz_page.dart';
+import 'package:quiz_app/riddles/math_champion_screen.dart';
 
 class RiddleSuccessPage extends StatefulWidget {
   final int nextIndex;
@@ -29,8 +30,9 @@ class _RiddleSuccessPageState extends State<RiddleSuccessPage>
       CurvedAnimation(parent: _iconController, curve: Curves.easeInOut),
     );
 
-    _confettiController =
-        ConfettiController(duration: const Duration(seconds: 2));
+    _confettiController = ConfettiController(
+      duration: const Duration(seconds: 2),
+    );
     _confettiController.play();
   }
 
@@ -52,8 +54,10 @@ class _RiddleSuccessPageState extends State<RiddleSuccessPage>
             Center(
               child: Container(
                 width: double.infinity,
-                margin:
-                    const EdgeInsets.symmetric(horizontal: 24, vertical: 40),
+                margin: const EdgeInsets.symmetric(
+                  horizontal: 24,
+                  vertical: 40,
+                ),
                 padding: const EdgeInsets.only(bottom: 24),
                 decoration: BoxDecoration(
                   color: Colors.white,
@@ -73,8 +77,9 @@ class _RiddleSuccessPageState extends State<RiddleSuccessPage>
                       padding: const EdgeInsets.symmetric(vertical: 16),
                       decoration: BoxDecoration(
                         color: Color(0xFF7A5DF5),
-                        borderRadius:
-                            BorderRadius.vertical(top: Radius.circular(24)),
+                        borderRadius: BorderRadius.vertical(
+                          top: Radius.circular(24),
+                        ),
                       ),
                       child: const Center(
                         child: Text(
@@ -115,10 +120,7 @@ class _RiddleSuccessPageState extends State<RiddleSuccessPage>
                     const SizedBox(height: 10),
                     const Text(
                       "You've completed this level\nsuccessfully.",
-                      style: TextStyle(
-                        fontSize: 16,
-                        color: Colors.black54,
-                      ),
+                      style: TextStyle(fontSize: 16, color: Colors.black54),
                       textAlign: TextAlign.center,
                     ),
                     const Spacer(),
@@ -126,15 +128,26 @@ class _RiddleSuccessPageState extends State<RiddleSuccessPage>
                       padding: const EdgeInsets.symmetric(horizontal: 24),
                       child: ElevatedButton.icon(
                         onPressed: () {
-                          Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(
-                              builder: (_) => RiddleQuizPage(
-                                startIndex: widget.nextIndex,
+                          if (widget.nextIndex >= 50) {
+                            Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(
+                                builder: (_) => MathChampionScreen(),
                               ),
-                            ),
-                          );
+                            );
+                          } else {
+                            Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(
+                                builder:
+                                    (_) => RiddleQuizPage(
+                                      startIndex: widget.nextIndex,
+                                    ),
+                              ),
+                            );
+                          }
                         },
+
                         icon: const Icon(Icons.arrow_forward),
                         label: const Text(
                           'Next Level',
@@ -159,7 +172,7 @@ class _RiddleSuccessPageState extends State<RiddleSuccessPage>
                 ),
               ),
             ),
-                        ConfettiWidget(
+            ConfettiWidget(
               confettiController: _confettiController,
               blastDirectionality: BlastDirectionality.explosive,
               shouldLoop: false,
@@ -173,7 +186,7 @@ class _RiddleSuccessPageState extends State<RiddleSuccessPage>
                 Colors.amber,
                 Colors.blue,
                 Colors.green,
-                Colors.pink
+                Colors.pink,
               ],
             ),
           ],

@@ -256,22 +256,21 @@ class _QuickMathPageState extends State<QuickMathPage>
     await prefs.setInt('best_score', _score);
   }
 
-    Navigator.pushReplacement(
-      context,
-      MaterialPageRoute(
-        builder:
-            (_) => ResultPage(
-              score: _score,
-              bestScore: max(_score, bestScore),
-              wasWrong: wasWrong,
-              question: question,
-              yourAnswer: yourAnswer,
-              correctAnswer: correctAnswer,
-              explanation: explanation,
-            ),
+  Navigator.pushReplacement(
+    context,
+    MaterialPageRoute(
+      builder: (_) => ResultPage(
+        score: _score,
+        bestScore: previousBest,
+        wasWrong: wasWrong,
+        question: question,
+        yourAnswer: yourAnswer,
+        correctAnswer: correctAnswer,
+        explanation: explanation,
       ),
-    );
-  }
+    ),
+  );
+}
 
   @override
   void dispose() {

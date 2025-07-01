@@ -3,6 +3,8 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'riddle_data.dart';
 import 'riddle_success_page.dart';
+import 'math_champion_screen.dart';
+import 'package:quiz_app/hint_options_dialog.dart';
 
 class RiddleQuizPage extends StatefulWidget {
   final int startIndex;
@@ -42,13 +44,19 @@ class _RiddleQuizPageState extends State<RiddleQuizPage> {
       if (widget.startIndex + 1 > completed) {
         await prefs.setInt('riddle_completed', widget.startIndex + 1);
       }
-
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(
-          builder: (_) => RiddleSuccessPage(nextIndex: widget.startIndex + 1),
-        ),
-      );
+      if (widget.startIndex == 49) {
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (_) => MathChampionScreen()),
+        );
+      } else {
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+            builder: (_) => RiddleSuccessPage(nextIndex: widget.startIndex + 1),
+          ),
+        );
+      }
     }
   }
 
@@ -124,7 +132,21 @@ class _RiddleQuizPageState extends State<RiddleQuizPage> {
         Column(
           children: [
             ElevatedButton(
-              onPressed: () {},
+              onPressed: () {
+                showDialog(
+                  context: context,
+                  builder:
+                      (_) => HintOptionsDialog(
+                        onHintAd: () {
+                          print("Hint ad triggered");
+                        },
+                        onSolutionAd: () {
+                          print("Solution ad triggered");
+                        },
+                      ),
+                );
+              },
+
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.amber,
                 foregroundColor: Colors.white,
