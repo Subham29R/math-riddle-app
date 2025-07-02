@@ -44,7 +44,17 @@ class _RiddleQuizPageState extends State<RiddleQuizPage> {
       if (widget.startIndex + 1 > completed) {
         await prefs.setInt('riddle_completed', widget.startIndex + 1);
       }
-      if (widget.startIndex == 49) {
+
+      await Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (_) => RiddleSuccessPage(nextIndex: widget.startIndex + 1),
+        ),
+      );
+
+      if (!mounted) return;
+
+      if (widget.startIndex + 1 == 50) {
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(builder: (_) => MathChampionScreen()),
@@ -53,7 +63,7 @@ class _RiddleQuizPageState extends State<RiddleQuizPage> {
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(
-            builder: (_) => RiddleSuccessPage(nextIndex: widget.startIndex + 1),
+            builder: (_) => RiddleQuizPage(startIndex: widget.startIndex + 1),
           ),
         );
       }

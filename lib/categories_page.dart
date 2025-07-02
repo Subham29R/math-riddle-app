@@ -122,7 +122,7 @@ class CategoriesPage extends StatelessWidget {
                   margin: EdgeInsets.only(bottom: 15),
                   padding: EdgeInsets.all(16),
                   decoration: BoxDecoration(
-                    color: Colors.purple,
+                    color: Colors.orange,
                     borderRadius: BorderRadius.circular(20),
                   ),
                   child: Column(
@@ -180,7 +180,7 @@ class CategoriesPage extends StatelessWidget {
                               MaterialPageRoute(builder: (_) => RiddlesPage()),
                             );
                           },
-                          color: Colors.purple,
+                          color: Colors.orange,
                         ),
                       ),
                     ],
@@ -191,7 +191,7 @@ class CategoriesPage extends StatelessWidget {
                   margin: EdgeInsets.only(bottom: 15),
                   padding: EdgeInsets.all(16),
                   decoration: BoxDecoration(
-                    color: Colors.blue,
+                    color: Colors.red,
                     borderRadius: BorderRadius.circular(20),
                   ),
                   child: Column(
@@ -244,7 +244,7 @@ class CategoriesPage extends StatelessWidget {
                         width: double.infinity,
                         child: AnimatedPlayButton(
                           onPressed: () {},
-                          color: Colors.blue,
+                          color: Colors.red,
                         ),
                       ),
                     ],
