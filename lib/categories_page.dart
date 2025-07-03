@@ -187,6 +187,7 @@ class CategoriesPage extends StatelessWidget {
                   ),
                 ),
 
+                // ...existing code...
                 Container(
                   margin: EdgeInsets.only(bottom: 15),
                   padding: EdgeInsets.all(16),
