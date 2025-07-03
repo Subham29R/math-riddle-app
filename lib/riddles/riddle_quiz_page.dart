@@ -4,7 +4,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'riddle_data.dart';
 import 'riddle_success_page.dart';
 import 'math_champion_screen.dart';
-import 'package:quiz_app/hint_options_dialog.dart';
+import 'package:quiz_app/dialog/hint_options_dialog.dart';
+import 'riddle_hint_data.dart';
 
 class RiddleQuizPage extends StatefulWidget {
   final int startIndex;
@@ -44,7 +45,17 @@ class _RiddleQuizPageState extends State<RiddleQuizPage> {
       if (widget.startIndex + 1 > completed) {
         await prefs.setInt('riddle_completed', widget.startIndex + 1);
       }
-      if (widget.startIndex == 49) {
+
+      await Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (_) => RiddleSuccessPage(nextIndex: widget.startIndex + 1),
+        ),
+      );
+
+      if (!mounted) return;
+
+      if (widget.startIndex + 1 == 50) {
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(builder: (_) => MathChampionScreen()),
@@ -53,7 +64,7 @@ class _RiddleQuizPageState extends State<RiddleQuizPage> {
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(
-            builder: (_) => RiddleSuccessPage(nextIndex: widget.startIndex + 1),
+            builder: (_) => RiddleQuizPage(startIndex: widget.startIndex + 1),
           ),
         );
       }
@@ -143,6 +154,9 @@ class _RiddleQuizPageState extends State<RiddleQuizPage> {
                         onSolutionAd: () {
                           print("Solution ad triggered");
                         },
+                        hintText: riddleHintList[widget.startIndex].hint,
+                        solutionText:
+                            riddleHintList[widget.startIndex].solution,
                       ),
                 );
               },
@@ -167,6 +181,7 @@ class _RiddleQuizPageState extends State<RiddleQuizPage> {
                 ],
               ),
             ),
+
             const SizedBox(height: 16),
             Container(
               padding: const EdgeInsets.all(16),

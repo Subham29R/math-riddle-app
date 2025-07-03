@@ -22,7 +22,6 @@ final List<RiddleQuestion> riddleQuestions = [
     answer: "36",
   ),
   RiddleQuestion(question: "7=13\n11=21\n16=?", answer: "31"),
-
   RiddleQuestion(
     question:
         "Turn me on my side, and I am everything. Cut me in half and I am nothing. What am I?",
@@ -45,10 +44,8 @@ final List<RiddleQuestion> riddleQuestions = [
         "There are seven people at a party. Each shakes hands once with each other. How many handshakes in total?",
     answer: "21",
   ),
-
   RiddleQuestion(question: "7=13\n11=20\n16=29\n20=>", answer: "36"),
   RiddleQuestion(question: "3, 5=34\n8,2=68\n4,6=52\n5,1=?", answer: "26"), 
-
   RiddleQuestion(question: "0, 1, 1, 2, 3, 5, ?", answer: "8"),
   RiddleQuestion(
     question:
@@ -65,7 +62,6 @@ final List<RiddleQuestion> riddleQuestions = [
     answer: "20",
   ),
   RiddleQuestion(question: "1, 12, 36, ?", answer: "80"),
-
   RiddleQuestion(question: "120, ?, 6, 2, 1", answer: "24"),
   RiddleQuestion(question: "1, 27, 125, ?", answer: "343"),
   RiddleQuestion(question: "32=25\n47=18\n23=52\n74=?", answer: "81"),
@@ -73,7 +69,6 @@ final List<RiddleQuestion> riddleQuestions = [
   RiddleQuestion(question: "3,5=34\n8,2=68\n4,6=52\n5,1=?", answer: "26"), 
   RiddleQuestion(
     question: "9,16 = 1\n4,36 = 4\n81,121 = 2\n25,49 = ?", 
-
     answer: "2",
   ),
   RiddleQuestion(
@@ -88,7 +83,6 @@ final List<RiddleQuestion> riddleQuestions = [
     answer: "6",
   ),
   RiddleQuestion(
-
     question: "21,6 = 9\n11,7 = 6\n36,3 = 13\n1,8 = ?", 
     answer: "3",
   ),
@@ -96,11 +90,11 @@ final List<RiddleQuestion> riddleQuestions = [
   RiddleQuestion(question: '', imagePath: 'assets/31.jpg', answer: '30'),
   RiddleQuestion(question: '', imagePath: 'assets/32.jpg', answer: '13'),
   RiddleQuestion(question: '', imagePath: 'assets/33.jpg', answer: '64'),
-  RiddleQuestion(question: '', imagePath: 'assets/34.jpg', answer: '204'),
-  RiddleQuestion(question: '', imagePath: 'assets/35.png', answer: '17'),
+  RiddleQuestion(question: '', imagePath: 'assets/34.jpg', answer: '17'),
+  RiddleQuestion(question: '', imagePath: 'assets/35.png', answer: '204'),
   RiddleQuestion(question: '', imagePath: 'assets/36.jpg', answer: '3'),
   RiddleQuestion(question: '', imagePath: 'assets/37.jpg', answer: '4'),
-  RiddleQuestion(question: '', imagePath: 'assets/38.jpg', answer: '77'),
+  RiddleQuestion(question: '', imagePath: 'assets/38.jpg', answer: '22'),
   RiddleQuestion(question: '', imagePath: 'assets/39.jpg', answer: '6'),
   RiddleQuestion(question: '', imagePath: 'assets/40.jpg', answer: '9'),
   RiddleQuestion(question: '', imagePath: 'assets/41.jpg', answer: '3'),
@@ -108,14 +102,9 @@ final List<RiddleQuestion> riddleQuestions = [
   RiddleQuestion(question: '', imagePath: 'assets/43.jpg', answer: '75'),
   RiddleQuestion(question: '', imagePath: 'assets/44.jpg', answer: '65'),
   RiddleQuestion(question: '', imagePath: 'assets/45.jpg', answer: '31'),
-
   RiddleQuestion(question: '', imagePath: 'assets/46.jpg', answer: '30'),
   RiddleQuestion(question: '', imagePath: 'assets/47.jpg', answer: '143'),
   RiddleQuestion(question: '', imagePath: 'assets/48.jpg', answer: '14'),
   RiddleQuestion(question: '', imagePath: 'assets/49.jpg', answer: '13'),
-
-  RiddleQuestion(question: '', imagePath: 'assets/50.jpg', answer: ''),
-
   RiddleQuestion(question: '', imagePath: 'assets/50.jpg', answer: '8'),
-
 ];

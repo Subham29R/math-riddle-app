@@ -136,15 +136,7 @@ class _RiddleSuccessPageState extends State<RiddleSuccessPage>
                               ),
                             );
                           } else {
-                            Navigator.pushReplacement(
-                              context,
-                              MaterialPageRoute(
-                                builder:
-                                    (_) => RiddleQuizPage(
-                                      startIndex: widget.nextIndex,
-                                    ),
-                              ),
-                            );
+                            Navigator.pop(context);
                           }
                         },
 

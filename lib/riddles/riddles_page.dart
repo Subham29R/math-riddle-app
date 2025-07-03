@@ -14,16 +14,26 @@ class _RiddlesPageState extends State<RiddlesPage> {
   int completedLevels = 0;
 
   @override
-  void initState() {
-    super.initState();
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    _loadProgress();
+  }
+
+  @override
+  void didUpdateWidget(covariant RiddlesPage oldWidget) {
+    super.didUpdateWidget(oldWidget);
     _loadProgress();
   }
 
   Future<void> _loadProgress() async {
     final prefs = await SharedPreferences.getInstance();
-    setState(() {
-      completedLevels = prefs.getInt('riddle_completed') ?? 0;
-    });
+    final progress = prefs.getInt('riddle_completed') ?? 0;
+
+    if (mounted && progress != completedLevels) {
+      setState(() {
+        completedLevels = progress;
+      });
+    }
   }
 
   @override
@@ -118,50 +128,62 @@ class _RiddlesPageState extends State<RiddlesPage> {
                     final isLocked = level > completedLevels + 1;
 
                     return ElevatedButton(
-                      onPressed: isLocked
-                          ? null
-                          : () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (_) => RiddleQuizPage(startIndex: index),
-                                ),
-                              ).then((_) => _loadProgress());
-                            },
+                      onPressed:
+                          isLocked
+                              ? null
+                              : () async {
+                                await Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder:
+                                        (_) =>
+                                            RiddleQuizPage(startIndex: index),
+                                  ),
+                                );
+                                await _loadProgress();
+                              },
+
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: isCurrent
-                            ? Colors.red
-                            : isCompleted
+                        backgroundColor:
+                            isCurrent
+                                ? Colors.amber
+                                : isCompleted
                                 ? Colors.green
                                 : Colors.grey.shade300,
-                        foregroundColor: isLocked ? Colors.grey.shade600 : Colors.white,
+                        foregroundColor:
+                            isLocked ? Colors.grey.shade600 : Colors.white,
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(9),
                         ),
                         padding: EdgeInsets.zero,
                       ),
-                      child: isLocked
-                          ? Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                const Icon(Icons.lock, size: 14, color: Colors.grey),
-                                const SizedBox(width: 4),
-                                Text(
-                                  '$level',
-                                  style: GoogleFonts.poppins(
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 14,
+                      child:
+                          isLocked
+                              ? Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  const Icon(
+                                    Icons.lock,
+                                    size: 14,
+                                    color: Colors.grey,
                                   ),
+                                  const SizedBox(width: 4),
+                                  Text(
+                                    '$level',
+                                    style: GoogleFonts.poppins(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 14,
+                                    ),
+                                  ),
+                                ],
+                              )
+                              : Text(
+                                '$level',
+                                style: GoogleFonts.poppins(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 16,
                                 ),
-                              ],
-                            )
-                          : Text(
-                              '$level',
-                              style: GoogleFonts.poppins(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 16,
                               ),
-                            ),
                     );
                   },
                 ),
@@ -189,18 +211,24 @@ class _RiddlesPageState extends State<RiddlesPage> {
                   ],
                 ),
                 ElevatedButton(
-                  onPressed: () {
-                    Navigator.push(
+                  onPressed: () async {
+                    await Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (_) => RiddleQuizPage(startIndex: completedLevels),
+                        builder:
+                            (_) => RiddleQuizPage(startIndex: completedLevels),
                       ),
-                    ).then((_) => _loadProgress());
+                    );
+                    await _loadProgress();
                   },
+
                   style: ElevatedButton.styleFrom(
                     backgroundColor: const Color(0xFF7A5DF5),
                     foregroundColor: Colors.white,
-                    padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 14),
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 20,
+                      vertical: 14,
+                    ),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(12),
                     ),
