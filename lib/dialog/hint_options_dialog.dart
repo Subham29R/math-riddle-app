@@ -1,13 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'riddle_info_dialog.dart';
+import 'animated_action_button.dart';
 
 class HintOptionsDialog extends StatelessWidget {
   final VoidCallback onHintAd;
   final VoidCallback onSolutionAd;
+  final String hintText;
+  final String solutionText;
 
   const HintOptionsDialog({
     super.key,
     required this.onHintAd,
     required this.onSolutionAd,
+    required this.hintText,
+    required this.solutionText,
   });
 
   @override
@@ -15,15 +22,14 @@ class HintOptionsDialog extends StatelessWidget {
     return Dialog(
       backgroundColor: Colors.white,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-      
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 20),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            const Text(
+            Text(
               "Need Help?",
-              style: TextStyle(
+              style: GoogleFonts.poppins(
                 fontWeight: FontWeight.bold,
                 fontSize: 22,
               ),
@@ -33,19 +39,43 @@ class HintOptionsDialog extends StatelessWidget {
               icon: Icons.lightbulb,
               iconColor: Colors.purple,
               label: "Watch ads for hint",
-              onTap: onHintAd,
+              onTap: () {
+                Navigator.of(context).pop();
+                onHintAd();
+                Future.delayed(const Duration(milliseconds: 150), () {
+                  showDialog(
+                    context: context,
+                    builder:
+                        (_) =>
+                            RiddleInfoDialog(title: "Hint", message: hintText),
+                  );
+                });
+              },
             ),
             const SizedBox(height: 12),
             _buildOptionButton(
               icon: Icons.shield_outlined,
               iconColor: Colors.green,
               label: "Watch ads for solution",
-              onTap: onSolutionAd,
+              onTap: () {
+                Navigator.of(context).pop();
+                onSolutionAd();
+                Future.delayed(const Duration(milliseconds: 150), () {
+                  showDialog(
+                    context: context,
+                    builder:
+                        (_) => RiddleInfoDialog(
+                          title: "Solution",
+                          message: solutionText,
+                        ),
+                  );
+                });
+              },
             ),
             const SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: () => Navigator.pop(context),
-              child: const Text("Cancel", style: TextStyle(color: Colors.black54)),
+            AnimatedActionButton(
+              text: "Cancel",
+              onPressed: () => Navigator.of(context).pop(),
             ),
           ],
         ),
@@ -82,7 +112,7 @@ class HintOptionsDialog extends StatelessWidget {
             Expanded(
               child: Text(
                 label,
-                style: const TextStyle(fontWeight: FontWeight.w500),
+                style: GoogleFonts.poppins(fontWeight: FontWeight.w500),
               ),
             ),
             Icon(Icons.ondemand_video, color: Colors.amber.shade600),
