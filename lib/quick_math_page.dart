@@ -3,6 +3,7 @@ import 'dart:math';
 import 'dart:async';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'result_page.dart';
+import 'milestone_popup.dart';
 
 class QuickMathPage extends StatefulWidget {
   @override
@@ -36,20 +37,19 @@ class _QuickMathPageState extends State<QuickMathPage>
       duration: Duration(seconds: 10),
       vsync: this,
     )..addStatusListener((status) {
-        if (status == AnimationStatus.completed) {
-          _goToResult(
-            wasWrong: true,
-            question: _question,
-            yourAnswer: _isBooleanQuestion
-                ? "No Answer"
-                : "No Answer",
-            correctAnswer: _isBooleanQuestion
-                ? (_correctAnswer == 1 ? "True" : "False")
-                : _correctAnswer.toString(),
-            explanation: _explanation,
-          );
-        }
-      });
+      if (status == AnimationStatus.completed) {
+        _goToResult(
+          wasWrong: true,
+          question: _question,
+          yourAnswer: _isBooleanQuestion ? "No Answer" : "No Answer",
+          correctAnswer:
+              _isBooleanQuestion
+                  ? (_correctAnswer == 1 ? "True" : "False")
+                  : _correctAnswer.toString(),
+          explanation: _explanation,
+        );
+      }
+    });
 
     _animation = Tween<double>(begin: 1.0, end: 0.0).animate(_controller);
     _animation.addListener(() {
@@ -74,7 +74,8 @@ class _QuickMathPageState extends State<QuickMathPage>
     _hintAnimController.addStatusListener((status) {
       if (status == AnimationStatus.completed) {
         _hintAnimController.reverse();
-      } else if (status == AnimationStatus.dismissed && _controller.isAnimating) {
+      } else if (status == AnimationStatus.dismissed &&
+          _controller.isAnimating) {
         _hintAnimController.forward();
       }
     });
@@ -105,22 +106,33 @@ class _QuickMathPageState extends State<QuickMathPage>
     else
       timerSeconds = 5;
 
-    if (timerSeconds != _lastTimerDuration) {
-      WidgetsBinding.instance.addPostFrameCallback((_) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text(
-              '🔥 You’re doing great! Timer now: $timerSeconds seconds!',
-              style: TextStyle(color: Colors.white),
-            ),
-            backgroundColor: Colors.deepPurple,
-            duration: Duration(seconds: 2),
-          ),
-        );
-      });
-      _lastTimerDuration = timerSeconds;
-    }
+    // if (timerSeconds != _lastTimerDuration) {
+    //   _lastTimerDuration = timerSeconds;
 
+    //   WidgetsBinding.instance.addPostFrameCallback((_) async {
+    //     await Navigator.push(
+    //       context,
+    //       PageRouteBuilder(
+    //         opaque: false,
+    //         barrierDismissible: false,
+    //         pageBuilder:
+    //             (_, __, ___) => MilestonePopup(
+    //               newTimerValue: timerSeconds,
+    //               level: (10 - timerSeconds + 1),
+    //             ),
+    //       ),
+    //     );
+
+    //     _startNextQuestion(timerSeconds);
+    //   });
+
+    //   return;
+    // }
+
+    _startNextQuestion(timerSeconds);
+  }
+
+  void _startNextQuestion(int timerSeconds) {
     _controller.duration = Duration(seconds: timerSeconds);
     _controller.reset();
     _controller.forward();
@@ -201,7 +213,8 @@ class _QuickMathPageState extends State<QuickMathPage>
 
       q = "$leftA + $leftB ${useGreater ? ">" : "<"} $rightA + $rightB";
       answer = isCorrect ? 1 : 0;
-      explanation = "$leftVal ${useGreater ? ">" : "<"} $rightVal is ${isCorrect ? "True" : "False"}";
+      explanation =
+          "$leftVal ${useGreater ? ">" : "<"} $rightVal is ${isCorrect ? "True" : "False"}";
       _options = [1, 0];
     }
 
@@ -220,57 +233,96 @@ class _QuickMathPageState extends State<QuickMathPage>
     });
   }
 
-  void _handleAnswer(int selected) {
+  void _handleAnswer(int selected) async {
     if (selected == _correctAnswer) {
+      int newScore = _score + 1;
+
+      int newTimerDuration;
+      if (newScore <= 10)
+        newTimerDuration = 10;
+      else if (newScore <= 20)
+        newTimerDuration = 9;
+      else if (newScore <= 30)
+        newTimerDuration = 8;
+      else if (newScore <= 40)
+        newTimerDuration = 7;
+      else if (newScore <= 50)
+        newTimerDuration = 6;
+      else
+        newTimerDuration = 5;
+
+      bool showMilestone = newScore % 10 == 0;
+
       setState(() {
-        _score++;
+        _score = newScore;
       });
+
+      if (showMilestone) {
+        _controller.stop();
+        await Navigator.push(
+          context,
+          PageRouteBuilder(
+            opaque: false,
+            barrierDismissible: false,
+            pageBuilder:
+                (_, __, ___) => MilestonePopup(
+                  newTimerValue: newTimerDuration,
+                  level: newScore,
+                ),
+          ),
+        );
+      }
+
+      _lastTimerDuration = newTimerDuration;
       _generateQuestion();
     } else {
       _goToResult(
         wasWrong: true,
         question: _question,
-        yourAnswer: _isBooleanQuestion
-            ? (selected == 1 ? "True" : "False")
-            : selected.toString(),
-        correctAnswer: _isBooleanQuestion
-            ? (_correctAnswer == 1 ? "True" : "False")
-            : _correctAnswer.toString(),
+        yourAnswer:
+            _isBooleanQuestion
+                ? (selected == 1 ? "True" : "False")
+                : selected.toString(),
+        correctAnswer:
+            _isBooleanQuestion
+                ? (_correctAnswer == 1 ? "True" : "False")
+                : _correctAnswer.toString(),
         explanation: _explanation,
       );
     }
   }
 
- void _goToResult({
-  bool wasWrong = false,
-  String? question,
-  String? yourAnswer,
-  String? correctAnswer,
-  String? explanation,
-}) async {
-  _controller.stop();
-  final prefs = await SharedPreferences.getInstance();
-  int previousBest = prefs.getInt('best_score') ?? 0;
+  void _goToResult({
+    bool wasWrong = false,
+    String? question,
+    String? yourAnswer,
+    String? correctAnswer,
+    String? explanation,
+  }) async {
+    _controller.stop();
+    final prefs = await SharedPreferences.getInstance();
+    int previousBest = prefs.getInt('best_score') ?? 0;
 
-  if (_score > previousBest) {
-    await prefs.setInt('best_score', _score);
-  }
+    if (_score > previousBest) {
+      await prefs.setInt('best_score', _score);
+    }
 
-  Navigator.pushReplacement(
-    context,
-    MaterialPageRoute(
-      builder: (_) => ResultPage(
-        score: _score,
-        bestScore: previousBest,
-        wasWrong: wasWrong,
-        question: question,
-        yourAnswer: yourAnswer,
-        correctAnswer: correctAnswer,
-        explanation: explanation,
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(
+        builder:
+            (_) => ResultPage(
+              score: _score,
+              bestScore: previousBest,
+              wasWrong: wasWrong,
+              question: question,
+              yourAnswer: yourAnswer,
+              correctAnswer: correctAnswer,
+              explanation: explanation,
+            ),
       ),
-    ),
-  );
-}
+    );
+  }
 
   @override
   void dispose() {
@@ -298,15 +350,40 @@ class _QuickMathPageState extends State<QuickMathPage>
                         children: [
                           Icon(Icons.psychology, color: Colors.white, size: 28),
                           SizedBox(width: 6),
-                          Text('$_score', style: TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold)),
+                          Text(
+                            '$_score',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
                         ],
                       ),
-                      Text('Quick Maths', style: TextStyle(color: Colors.white, fontSize: 30, fontWeight: FontWeight.bold)),
+                      Text(
+                        'Quick Maths',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 30,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
                       Row(
                         children: [
-                          Icon(Icons.emoji_events, color: Colors.amber, size: 28),
+                          Icon(
+                            Icons.emoji_events,
+                            color: Colors.amber,
+                            size: 28,
+                          ),
                           SizedBox(width: 6),
-                          Text('$_bestScore', style: TextStyle(color: Colors.amber, fontSize: 20, fontWeight: FontWeight.bold)),
+                          Text(
+                            '$_bestScore',
+                            style: TextStyle(
+                              color: Colors.amber,
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
                         ],
                       ),
                     ],
@@ -320,7 +397,10 @@ class _QuickMathPageState extends State<QuickMathPage>
                         child: AnimatedBuilder(
                           animation: _animation,
                           builder: (context, child) {
-                            Color barColor = _animation.value > 0.3 ? Colors.white : Colors.red;
+                            Color barColor =
+                                _animation.value > 0.3
+                                    ? Colors.white
+                                    : Colors.red;
                             return Container(
                               height: 20,
                               decoration: BoxDecoration(
@@ -344,12 +424,16 @@ class _QuickMathPageState extends State<QuickMathPage>
                     ],
                   ),
                   SizedBox(height: 30),
-                  Text(_question, style: TextStyle(color: Colors.white, fontSize: 26)),
+                  Text(
+                    _question,
+                    style: TextStyle(color: Colors.white, fontSize: 26),
+                  ),
                   SizedBox(height: 30),
                   ..._options.map((opt) {
-                    String label = (_score >= 20 && _options.length == 2)
-                        ? (opt == 1 ? "True" : "False")
-                        : opt.toString();
+                    String label =
+                        (_score >= 20 && _options.length == 2)
+                            ? (opt == 1 ? "True" : "False")
+                            : opt.toString();
                     return Padding(
                       padding: const EdgeInsets.symmetric(vertical: 8.0),
                       child: SizedBox(
