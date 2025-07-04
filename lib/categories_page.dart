@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-// import 'quick_math_page.dart';
+import 'hardmaths/hard_math_page.dart';
 import 'package:quiz_app/riddles/riddles_page.dart';
 import 'quick_math_countdown.dart';
 import 'animated_play_button.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class CategoriesPage extends StatelessWidget {
   @override
@@ -187,7 +188,6 @@ class CategoriesPage extends StatelessWidget {
                   ),
                 ),
 
-                // ...existing code...
                 Container(
                   margin: EdgeInsets.only(bottom: 15),
                   padding: EdgeInsets.all(16),
@@ -207,7 +207,7 @@ class CategoriesPage extends StatelessWidget {
                               shape: BoxShape.circle,
                             ),
                             child: Icon(
-                              Icons.grid_4x4,
+                              FontAwesomeIcons.skullCrossbones,
                               color: Colors.white,
                               size: 28,
                             ),
@@ -244,7 +244,12 @@ class CategoriesPage extends StatelessWidget {
                       SizedBox(
                         width: double.infinity,
                         child: AnimatedPlayButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (_) => HardMathPage()),
+                            );
+                          },
                           color: Colors.red,
                         ),
                       ),

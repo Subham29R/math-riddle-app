@@ -20,6 +20,7 @@ class _RiddleQuizPageState extends State<RiddleQuizPage> {
   final TextEditingController _controller = TextEditingController();
   bool _isAnswerCorrect = false;
   bool _submitted = false;
+  bool hasWatchedHint = false;
 
   @override
   void initState() {
@@ -148,9 +149,14 @@ class _RiddleQuizPageState extends State<RiddleQuizPage> {
                   context: context,
                   builder:
                       (_) => HintOptionsDialog(
+                        hasWatchedHint: hasWatchedHint,
                         onHintAd: () {
+                          setState(() {
+                            hasWatchedHint = true;
+                          });
                           print("Hint ad triggered");
                         },
+
                         onSolutionAd: () {
                           print("Solution ad triggered");
                         },

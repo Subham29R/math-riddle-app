@@ -3,11 +3,12 @@ import 'package:google_fonts/google_fonts.dart';
 import 'riddle_info_dialog.dart';
 import 'animated_action_button.dart';
 
-class HintOptionsDialog extends StatelessWidget {
+class HintOptionsDialog extends StatefulWidget {
   final VoidCallback onHintAd;
   final VoidCallback onSolutionAd;
   final String hintText;
   final String solutionText;
+  final bool hasWatchedHint;
 
   const HintOptionsDialog({
     super.key,
@@ -15,7 +16,57 @@ class HintOptionsDialog extends StatelessWidget {
     required this.onSolutionAd,
     required this.hintText,
     required this.solutionText,
+    required this.hasWatchedHint,
   });
+
+  @override
+  State<HintOptionsDialog> createState() => _HintOptionsDialogState();
+}
+
+class _HintOptionsDialogState extends State<HintOptionsDialog> {
+  late bool _hasWatchedHint = widget.hasWatchedHint;
+
+  bool _showError = false;
+
+  void _handleHint() {
+    widget.onHintAd();
+    setState(() {
+      _hasWatchedHint = true;
+      _showError = false;
+    });
+
+    Navigator.of(context).pop();
+    Future.delayed(const Duration(milliseconds: 150), () {
+      showDialog(
+        context: context,
+        builder:
+            (_) => RiddleInfoDialog(title: "Hint", message: widget.hintText),
+      );
+    });
+  }
+
+  void _handleSolution() {
+    if (!_hasWatchedHint) {
+      setState(() {
+        _showError = true;
+      });
+      return;
+    }
+
+    widget.onSolutionAd();
+
+    Navigator.of(context).pop();
+    Future.delayed(const Duration(milliseconds: 150), () {
+      showDialog(
+        context: context,
+        builder:
+            (_) => RiddleInfoDialog(
+              title: "Solution",
+              message: widget.solutionText,
+            ),
+      );
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -39,39 +90,26 @@ class HintOptionsDialog extends StatelessWidget {
               icon: Icons.lightbulb,
               iconColor: Colors.purple,
               label: "Watch ads for hint",
-              onTap: () {
-                Navigator.of(context).pop();
-                onHintAd();
-                Future.delayed(const Duration(milliseconds: 150), () {
-                  showDialog(
-                    context: context,
-                    builder:
-                        (_) =>
-                            RiddleInfoDialog(title: "Hint", message: hintText),
-                  );
-                });
-              },
+              onTap: _handleHint,
             ),
             const SizedBox(height: 12),
             _buildOptionButton(
               icon: Icons.shield_outlined,
               iconColor: Colors.green,
               label: "Watch ads for solution",
-              onTap: () {
-                Navigator.of(context).pop();
-                onSolutionAd();
-                Future.delayed(const Duration(milliseconds: 150), () {
-                  showDialog(
-                    context: context,
-                    builder:
-                        (_) => RiddleInfoDialog(
-                          title: "Solution",
-                          message: solutionText,
-                        ),
-                  );
-                });
-              },
+              onTap: _handleSolution,
             ),
+            if (_showError) ...[
+              const SizedBox(height: 10),
+              Text(
+                "⚠ You need to watch the hint first!",
+                style: GoogleFonts.poppins(
+                  color: Colors.red,
+                  fontSize: 14,
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+            ],
             const SizedBox(height: 20),
             AnimatedActionButton(
               text: "Cancel",
