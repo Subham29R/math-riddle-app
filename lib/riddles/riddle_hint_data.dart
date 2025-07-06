@@ -43,25 +43,25 @@ final List<RiddleHintData> riddleHintList = [
     solution: "10 in each place = 20.",
   ),
   RiddleHintData(
-    hint: "Find the difference.",
-    solution: "Next is 36 + 44 = 80.",
+    hint: "Addition of Cube and Square",
+    solution: "4³ + 4² = 80.",
   ),
   RiddleHintData(
     hint: "It's reverse factorials.",
     solution: "5! = 120, 4! = 24...",
   ),
   RiddleHintData(hint: "Cubes of odd numbers.", solution: "7³ = 343."),
-  RiddleHintData(hint: "Reverse and play with it.", solution: "Custom rule."),
-  RiddleHintData(hint: "Break the pattern.", solution: "Different logic here."),
-  RiddleHintData(hint: "Multiply, then add.", solution: "5×1 + 5 + 1 = 11."),
+  RiddleHintData(hint: "Reverse and play with it.", solution: "Reverse of 18 is 81."),
+  RiddleHintData(hint: "+1,-2 Pattern", solution: "20 - 4 = 16."),
+  RiddleHintData(hint: "(a+b)-(a-b)", solution: "6 - 4 = 2."),
   RiddleHintData(
     hint: "Think square roots.",
     solution: "Count perfect squares.",
   ),
   RiddleHintData(hint: "Try a combo that works.", solution: "1, 6, 9, 4 work."),
   RiddleHintData(hint: "They’re all primes.", solution: "Next is 67."),
-  RiddleHintData(hint: "Make an equation.", solution: "4×6 + 6 = 30."),
-  RiddleHintData(hint: "Check pattern closely.", solution: "Custom logic."),
+  RiddleHintData(hint: "n*(n+1)", solution: "Multiply with gaps of 2;7*8 = 56."),
+  RiddleHintData(hint: "/3", solution: "(1+8)/3 = 3."),
   RiddleHintData(
     hint: "Cubes in reverse order.",
     solution: "7³, 5³, 3³, 1³ → 125.",
@@ -69,8 +69,15 @@ final List<RiddleHintData> riddleHintList = [
 
   RiddleHintData(hint: "Opposite side", solution: "6×5 = 30"),
   RiddleHintData(hint: "/4", solution: "(44+8)/4 = 13"),
-  RiddleHintData(hint: "N²", solution: "8² = 64"),
-  RiddleHintData(hint: "", solution: ""),
+  RiddleHintData(hint: "Traverse the row in reverse order", solution: " Multiply;3*? = 30;10->ANS."),
+  RiddleHintData(hint: "Count grid based Squares", solution: "1x1 squares: 8 rows * 8 columns = 64 squares\n" +
+                "2x2 squares: 7 rows * 7 columns = 49 squares\n" +
+                "3x3 squares: 6 rows * 6 columns = 36 squares\n" +
+                "4x4 squares: 5 rows * 5 columns = 25 squares\n" +
+                "5x5 squares: 4 rows * 4 columns = 16 squares\n" +
+                "6x6 squares: 3 rows * 3 columns = 9 squares\n" +
+                "7x7 squares: 2 rows * 2 columns = 4 squares\n" +
+                "8x8 squares: 1 row  * 1 column  = 1 square"),
   RiddleHintData(hint: "+2", solution: "15 + 2 = 17"),
   RiddleHintData(hint: "a² − b²", solution: "2² − 1² = 3"),
   RiddleHintData(hint: "√A + √B", solution: "√1 + √9 = 4"),
@@ -80,7 +87,7 @@ final List<RiddleHintData> riddleHintList = [
   ),
   RiddleHintData(hint: "Sum ÷ 3", solution: "(1+2+8+13+?)/3 = 10 → Ans: 6"),
   RiddleHintData(hint: "a³ + 1", solution: "a³ + 1 = 730 → a = 9"),
-  RiddleHintData(hint: "a − b", solution: "7 − 4 = 3"),
+  RiddleHintData(hint: "a + b", solution: "10 + 5 = 15"),
   RiddleHintData(hint: "Prime number", solution: "Next prime after 33 is 37"),
   RiddleHintData(hint: "Multiply by center number", solution: "15 × 5 = 75"),
   RiddleHintData(hint: "a²−1, a²+1 pattern", solution: "8² + 1 = 65"),
