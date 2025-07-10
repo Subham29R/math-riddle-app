@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'hardmaths/hard_math_page.dart';
+import 'package:quiz_app/hardmaths/hardmath_page.dart';
 import 'package:quiz_app/riddles/riddles_page.dart';
 import 'quick_math_countdown.dart';
 import 'animated_play_button.dart';
@@ -247,7 +247,7 @@ class CategoriesPage extends StatelessWidget {
                           onPressed: () {
                             Navigator.push(
                               context,
-                              MaterialPageRoute(builder: (_) => HardMathPage()),
+                              MaterialPageRoute(builder: (_) => HardMathsPage()),
                             );
                           },
                           color: Colors.red,

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'categories_page.dart';
+import 'settings_page.dart';
+import 'dailychallenge/daily_challenge_page.dart';
 
 class HomePage extends StatelessWidget {
   final buttonTextStyle = TextStyle(
@@ -57,7 +59,12 @@ class HomePage extends StatelessWidget {
                 ),
                 SizedBox(height: 15),
                 _buildAnimatedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => DailyChallengePage()),
+                    );
+                  },
                   icon: Icons.calendar_today,
                   label: 'Daily Challenge',
                   color: Colors.blue,
@@ -83,11 +90,19 @@ class HomePage extends StatelessWidget {
                 ),
                 SizedBox(height: 15),
                 _buildAnimatedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const SettingsScreen(),
+                      ),
+                    );
+                  },
                   icon: Icons.settings,
                   label: 'Settings',
                   color: Colors.grey.shade800,
                 ),
+
                 SizedBox(height: 15),
                 _buildAnimatedButton(
                   onPressed: () {},
