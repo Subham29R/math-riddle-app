@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'hardMath_quiz_page.dart';
 
-
-class HardMathPage extends StatefulWidget {
-  const HardMathPage({super.key});
+class HardMathsPage extends StatefulWidget {
+  const HardMathsPage({super.key});
 
   @override
-  State<HardMathPage> createState() => _HardMathPageState();
+  State<HardMathsPage> createState() => _HardMathsPageState();
 }
 
-class _HardMathPageState extends State<HardMathPage> {
+class _HardMathsPageState extends State<HardMathsPage> {
   int completedLevels = 0;
 
   @override
@@ -20,14 +20,14 @@ class _HardMathPageState extends State<HardMathPage> {
   }
 
   @override
-  void didUpdateWidget(covariant HardMathPage oldWidget) {
+  void didUpdateWidget(covariant HardMathsPage oldWidget) {
     super.didUpdateWidget(oldWidget);
     _loadProgress();
   }
 
   Future<void> _loadProgress() async {
     final prefs = await SharedPreferences.getInstance();
-    final progress = prefs.getInt('hardmath_completed') ?? 0;
+    final progress = prefs.getInt('hardMath_completed') ?? 0;
 
     if (mounted && progress != completedLevels) {
       setState(() {
@@ -48,7 +48,7 @@ class _HardMathPageState extends State<HardMathPage> {
           onPressed: () => Navigator.pop(context),
         ),
         title: Text(
-          'Hard Math',
+          'Math Challenge',
           style: GoogleFonts.poppins(
             color: Colors.white,
             fontWeight: FontWeight.bold,
@@ -128,15 +128,26 @@ class _HardMathPageState extends State<HardMathPage> {
                     final isLocked = level > completedLevels + 1;
 
                     return ElevatedButton(
-                      onPressed: isLocked
-                          ? null
-                          : () async {
-                              
-                            },
+                      onPressed:
+                          isLocked
+                              ? null
+                              : () async {
+                                await Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder:
+                                        (_) =>
+                                            HardMathQuizPage(startIndex: index),
+                                  ),
+                                );
+                                await _loadProgress();
+                              },
+
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: isCurrent
-                            ? Colors.red
-                            : isCompleted
+                        backgroundColor:
+                            isCurrent
+                                ? Colors.red
+                                : isCompleted
                                 ? Colors.green
                                 : Colors.grey.shade300,
                         foregroundColor:
@@ -146,28 +157,33 @@ class _HardMathPageState extends State<HardMathPage> {
                         ),
                         padding: EdgeInsets.zero,
                       ),
-                      child: isLocked
-                          ? Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                const Icon(Icons.lock, size: 14, color: Colors.grey),
-                                const SizedBox(width: 4),
-                                Text(
-                                  '$level',
-                                  style: GoogleFonts.poppins(
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 14,
+                      child:
+                          isLocked
+                              ? Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  const Icon(
+                                    Icons.lock,
+                                    size: 14,
+                                    color: Colors.grey,
                                   ),
+                                  const SizedBox(width: 4),
+                                  Text(
+                                    '$level',
+                                    style: GoogleFonts.poppins(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 14,
+                                    ),
+                                  ),
+                                ],
+                              )
+                              : Text(
+                                '$level',
+                                style: GoogleFonts.poppins(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 16,
                                 ),
-                              ],
-                            )
-                          : Text(
-                              '$level',
-                              style: GoogleFonts.poppins(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 16,
                               ),
-                            ),
                     );
                   },
                 ),
@@ -196,8 +212,16 @@ class _HardMathPageState extends State<HardMathPage> {
                 ),
                 ElevatedButton(
                   onPressed: () async {
-                    
+                    await Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder:
+                            (_) => HardMathQuizPage(startIndex: completedLevels),
+                      ),
+                    );
+                    await _loadProgress();
                   },
+
                   style: ElevatedButton.styleFrom(
                     backgroundColor: const Color(0xFF7A5DF5),
                     foregroundColor: Colors.white,
