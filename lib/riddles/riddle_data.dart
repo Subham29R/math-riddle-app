@@ -65,7 +65,7 @@ final List<RiddleQuestion> riddleQuestions = [
   RiddleQuestion(question: "120, ?, 6, 2, 1", answer: "24"),
   RiddleQuestion(question: "1, 27, 125, ?", answer: "343"),
   RiddleQuestion(question: "32=25\n47=18\n23=52\n74=?", answer: "81"),
-  RiddleQuestion(question: "7=15\n11=20\n16=35\n20=?", answer: "16"),
+  RiddleQuestion(question: "7=15\n11=20\n16=35\n20=?", answer: "36"),
   RiddleQuestion(question: "3,5=6\n8,2=4\n4,6=8\n5,1=?", answer: "2"), 
   RiddleQuestion(
     question: "9,16 = 1\n4,36 = 4\n81,121 = 2\n25,49 = ?", 
@@ -89,7 +89,7 @@ final List<RiddleQuestion> riddleQuestions = [
   RiddleQuestion(question: "343, ?, 27, 1", answer: "125"),
   RiddleQuestion(question: '', imagePath: 'assets/31.jpg', answer: '30'),
   RiddleQuestion(question: '', imagePath: 'assets/32.jpg', answer: '13'),
-  RiddleQuestion(question: '', imagePath: 'assets/33.jpg', answer: '64'),
+  RiddleQuestion(question: '', imagePath: 'assets/33.jpg', answer: '10'),
   RiddleQuestion(question: '', imagePath: 'assets/34.jpg', answer: '17'),
   RiddleQuestion(question: '', imagePath: 'assets/35.jpg', answer: '204'),
   RiddleQuestion(question: '', imagePath: 'assets/36.jpg', answer: '3'),

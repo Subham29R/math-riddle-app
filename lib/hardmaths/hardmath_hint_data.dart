@@ -6,66 +6,38 @@ class HardMathHintData {
 }
 
 final List<HardMathHintData> hardMathHintList = [
-  HardMathHintData(hint: "Odd number pattern.", solution: "Next is 9."),
+  HardMathHintData(hint: "Normal BODMASS", solution: "10->ANS"),
   HardMathHintData(
-    hint: "Do the math step by step.",
-    solution: "4×6 = 24, then -6 = 18.",
+    hint: "N*(num)+num",
+    solution: "3*2+2=8\n8*3+3=27\n112*5+5=565->ANS",
   ),
-  HardMathHintData(hint: "Think about 0.", solution: "Any number × 0 = 0."),
+  HardMathHintData(hint: "Try to make an equation", solution: "N³ - N² = 48 → N = 4"),
   HardMathHintData(
-    hint: "Only once means one time.",
-    solution: "25 - 5 = 20. Then not 25.",
-  ),
-  HardMathHintData(
-    hint: "Try digits that add to 9.",
-    solution: "36 → 3 + 6 = 9.",
+    hint: "*6,-6...",
+    solution: "66 * 6 = 396,\n396 - 6 = 390->ANS",
   ),
   HardMathHintData(
-    hint: "Add close numbers.",
-    solution: "7+6=13, 11+10=21, 16+15=31.",
+    hint: "p = (1120/80)²",
+    solution: "p = 196->ANS",
   ),
-  HardMathHintData(hint: "Look at the shape.", solution: "Half of 8 is 0."),
   HardMathHintData(
-    hint: "Don’t count same people twice.",
-    solution: "Total is 13.",
+    hint: "!",
+    solution: "Factorial: 5! = 120->ANS",
   ),
-  HardMathHintData(hint: "They're cubes.", solution: "1³, 2³, 3³, 4³ → 64."),
-  HardMathHintData(hint: "Last digit is coming front", solution: "6457"),
+  HardMathHintData(hint: "Focus on unit digits", solution: "0 + 1 + 4 + 9 = 14; Unit digit: 4->ANS"),
+  HardMathHintData(
+    hint: "Addition of Squares",
+    solution: "51+1 = 52\n52+4 = 56\n56+9 = 65\n65+16 = 81->ANS",
+  ),
+  HardMathHintData(hint: "Take common", solution: "4⁶¹×(1 + 4 + 4²)\n21 is divided by 3(smallest)->ANS"),
+  HardMathHintData(hint: "2*× (num + 1)²", solution: "2*(1)² = 18\n2*(2)² = 8\n2*(3)² = 18\n 2*(4)² = 32->ANS"),
   HardMathHintData(hint: "Eating rate stays same.", solution: "3×4 = 12 pizzas."),
-  HardMathHintData(hint: "It's a handshake formula.", solution: "7C2 = 21."),
-  HardMathHintData(hint: "Look at how it increases.", solution: "Next is 36."),
-  HardMathHintData(hint: "Square then add.", solution: "5² + 1 = 26."),
-  HardMathHintData(hint: "Fibonacci numbers.", solution: "5 + 3 = 8."),
-  HardMathHintData(hint: "Try x = 0.", solution: "3×0 = 0 ≤ 2×0 = 0."),
-  HardMathHintData(hint: "Spelling trick.", solution: "1 + G = Gone."),
-  HardMathHintData(
-    hint: "Count how many 9s.",
-    solution: "10 in each place = 20.",
-  ),
-  HardMathHintData(
-    hint: "Addition of Cube and Square",
-    solution: "4³ + 4² = 80.",
-  ),
-  HardMathHintData(
-    hint: "It's reverse factorials.",
-    solution: "5! = 120, 4! = 24...",
-  ),
-  HardMathHintData(hint: "Cubes of odd numbers.", solution: "7³ = 343."),
-  HardMathHintData(hint: "Reverse and play with it.", solution: "Reverse of 18 is 81."),
-  HardMathHintData(hint: "+1,-2 Pattern", solution: "20 - 4 = 16."),
-  HardMathHintData(hint: "(a+b)-(a-b)", solution: "6 - 4 = 2."),
-  HardMathHintData(
-    hint: "Think square roots.",
-    solution: "Count perfect squares.",
-  ),
-  HardMathHintData(hint: "Try a combo that works.", solution: "1, 6, 9, 4 work."),
-  HardMathHintData(hint: "They’re all primes.", solution: "Next is 67."),
-  HardMathHintData(hint: "n*(n+1)", solution: "Multiply with gaps of 2;7*8 = 56."),
-  HardMathHintData(hint: "/3", solution: "(1+8)/3 = 3."),
-  HardMathHintData(
-    hint: "Cubes in reverse order.",
-    solution: "7³, 5³, 3³, 1³ → 125.",
-  ),
+  HardMathHintData(hint: "Focus on Unit digit\nUnit digit of power 7 cycle:7,9,3,1", solution: "For 7->245/4 = 61 with remainder of 1;7^1 = 1\nFor 1-> Unit digit will always be 1\n7 * 1 = 7->ANS"),
+  HardMathHintData(hint: "Addition", solution: "20,40,60,42 + 38 = 80->ANS"),
+  HardMathHintData(hint: "Prime Number", solution: "Addition of digits\n11,13,17,3+8+8=19\n88->ANS"),
+  HardMathHintData(hint: "Cube-Square.", solution: "8³ - 2² = 508->ANS"),
+
+
 
   HardMathHintData(hint: "Opposite side", solution: "6×5 = 30"),
   HardMathHintData(hint: "/4", solution: "(44+8)/4 = 13"),
