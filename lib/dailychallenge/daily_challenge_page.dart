@@ -24,11 +24,16 @@ class _DailyChallengePageState extends State<DailyChallengePage> {
   @override
   void initState() {
     super.initState();
+<<<<<<< HEAD
+=======
+    _initializeChallenge();
+>>>>>>> 4fdf84c0d4977d0f207eaca1662db8d5ee2820b1
     _controller.addListener(() {
       setState(() {});
     });
   }
 
+<<<<<<< HEAD
   Future<bool> _shouldShowResultPage() async {
     final prefs = await SharedPreferences.getInstance();
     _streak = prefs.getInt('dailyChallengeStreak') ?? 0;
@@ -118,6 +123,33 @@ class _DailyChallengePageState extends State<DailyChallengePage> {
         builder: (_) => DailyChallengeResultPage(streak: updatedStreak),
       ),
     );
+=======
+  Future<void> _initializeChallenge() async {
+    final prefs = await SharedPreferences.getInstance();
+
+    final savedStreak = prefs.getInt('dailyChallengeStreak') ?? 0;
+    final savedDate = prefs.getString('lastCompletedDate');
+    if (savedDate != null) {
+      _lastPlayedDate = DateTime.tryParse(savedDate);
+    }
+
+    setState(() {
+      _streak = savedStreak;
+    });
+
+    String? startDateStr = prefs.getString('dailyChallengeStartDate');
+    if (startDateStr == null) {
+      final today = DateTime.now();
+      await prefs.setString('dailyChallengeStartDate', today.toIso8601String());
+      startDateStr = today.toIso8601String();
+    }
+
+    final startDate = DateTime.parse(startDateStr);
+    final daysPassed = DateTime.now().difference(startDate).inDays;
+    setState(() {
+      _index = daysPassed % dailyQuestions.length;
+    });
+>>>>>>> 4fdf84c0d4977d0f207eaca1662db8d5ee2820b1
   }
 
   void _handleKey(String value) {
@@ -139,6 +171,56 @@ class _DailyChallengePageState extends State<DailyChallengePage> {
     }
   }
 
+<<<<<<< HEAD
+=======
+  Future<void> _submitAnswer() async {
+    final prefs = await SharedPreferences.getInstance();
+    final current = dailyQuestions[_index];
+    final userAnswer = _controller.text.trim();
+    final correctAnswer = current.answer.trim();
+
+    final now = DateTime.now();
+    final today = DateTime(now.year, now.month, now.day);
+    final savedDateString = prefs.getString('lastCompletedDate');
+    final lastPlayed =
+        savedDateString != null ? DateTime.tryParse(savedDateString) : null;
+
+    bool alreadyPlayedToday = lastPlayed != null && lastPlayed == today;
+    final isCorrect = userAnswer == correctAnswer;
+
+    setState(() {
+      _submitted = true;
+      _isAnswerCorrect = isCorrect;
+    });
+
+    if (!isCorrect) return;
+
+    int updatedStreak = _streak;
+
+    if (!alreadyPlayedToday) {
+      if (lastPlayed != null && today.difference(lastPlayed).inDays == 1) {
+        updatedStreak += 1;
+      } else {
+        updatedStreak = 1;
+      }
+
+      await prefs.setString('lastCompletedDate', today.toIso8601String());
+      await prefs.setInt('dailyChallengeStreak', updatedStreak);
+    }
+
+    if (!mounted) return;
+
+    Navigator.pushReplacement(
+  context,
+  MaterialPageRoute(
+    builder: (_) => DailyChallengeResultPage(
+      streak: updatedStreak, 
+    ),
+  ),
+);
+  }
+
+>>>>>>> 4fdf84c0d4977d0f207eaca1662db8d5ee2820b1
   Widget _buildKey(String value) {
     IconData? icon;
     if (value == '<') icon = Icons.backspace_outlined;
@@ -164,7 +246,12 @@ class _DailyChallengePageState extends State<DailyChallengePage> {
     );
   }
 
+<<<<<<< HEAD
   Widget _buildChallengeUI() {
+=======
+  @override
+  Widget build(BuildContext context) {
+>>>>>>> 4fdf84c0d4977d0f207eaca1662db8d5ee2820b1
     final current = dailyQuestions[_index];
     final isImageQuestion = _index < 10;
     final question = current.question;
@@ -173,7 +260,11 @@ class _DailyChallengePageState extends State<DailyChallengePage> {
     final imagePath = current.imagePath;
 
     final content = Column(
+<<<<<<< HEAD
       mainAxisSize: MainAxisSize.min,
+=======
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+>>>>>>> 4fdf84c0d4977d0f207eaca1662db8d5ee2820b1
       children: [
         Column(
           children: [
@@ -210,7 +301,11 @@ class _DailyChallengePageState extends State<DailyChallengePage> {
             ),
             const SizedBox(height: 10),
             Container(height: 5, width: 120, color: const Color(0xFF7A5DF5)),
+<<<<<<< HEAD
             const SizedBox(height: 20),
+=======
+            const SizedBox(height: 12),
+>>>>>>> 4fdf84c0d4977d0f207eaca1662db8d5ee2820b1
             ElevatedButton(
               onPressed: () {
                 showDialog(
@@ -248,7 +343,11 @@ class _DailyChallengePageState extends State<DailyChallengePage> {
             ),
           ],
         ),
+<<<<<<< HEAD
         const SizedBox(height: 20),
+=======
+        const SizedBox(height: 12),
+>>>>>>> 4fdf84c0d4977d0f207eaca1662db8d5ee2820b1
         Column(
           children: [
             Container(
@@ -282,8 +381,14 @@ class _DailyChallengePageState extends State<DailyChallengePage> {
                   SizedBox(
                     width: double.infinity,
                     child: ElevatedButton.icon(
+<<<<<<< HEAD
                       onPressed:
                           _controller.text.trim().isEmpty ? null : _submitAnswer,
+=======
+                      onPressed: _controller.text.trim().isEmpty
+                          ? null
+                          : _submitAnswer,
+>>>>>>> 4fdf84c0d4977d0f207eaca1662db8d5ee2820b1
                       icon: const Icon(Icons.check),
                       label: Text(
                         'Enter',
@@ -325,6 +430,7 @@ class _DailyChallengePageState extends State<DailyChallengePage> {
               padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
               color: const Color(0xFF7A5DF5),
               child: Row(
+<<<<<<< HEAD
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Row(
@@ -360,6 +466,21 @@ class _DailyChallengePageState extends State<DailyChallengePage> {
                         ),
                       ),
                     ],
+=======
+                children: [
+                  IconButton(
+                    icon: const Icon(Icons.arrow_back, color: Colors.white),
+                    onPressed: () => Navigator.pop(context),
+                  ),
+                  const SizedBox(width: 4),
+                  Text(
+                    'Daily Challenge',
+                    style: GoogleFonts.poppins(
+                      color: Colors.white,
+                      fontSize: 16,
+                      fontWeight: FontWeight.w600,
+                    ),
+>>>>>>> 4fdf84c0d4977d0f207eaca1662db8d5ee2820b1
                   ),
                 ],
               ),
@@ -368,6 +489,7 @@ class _DailyChallengePageState extends State<DailyChallengePage> {
               child: Container(
                 width: double.infinity,
                 color: Colors.white,
+<<<<<<< HEAD
                 padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
                 child: SingleChildScrollView(
                   physics: const ClampingScrollPhysics(),
@@ -378,6 +500,15 @@ class _DailyChallengePageState extends State<DailyChallengePage> {
                     child: IntrinsicHeight(child: content),
                   ),
                 ),
+=======
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 24,
+                  vertical: 16,
+                ),
+                child: isImageQuestion
+                    ? SingleChildScrollView(child: content)
+                    : content,
+>>>>>>> 4fdf84c0d4977d0f207eaca1662db8d5ee2820b1
               ),
             ),
           ],
@@ -387,6 +518,7 @@ class _DailyChallengePageState extends State<DailyChallengePage> {
   }
 
   @override
+<<<<<<< HEAD
   Widget build(BuildContext context) {
     return FutureBuilder<bool>(
       future: _shouldShowResultPage(),
@@ -419,6 +551,8 @@ class _DailyChallengePageState extends State<DailyChallengePage> {
   }
 
   @override
+=======
+>>>>>>> 4fdf84c0d4977d0f207eaca1662db8d5ee2820b1
   void dispose() {
     _controller.dispose();
     super.dispose();

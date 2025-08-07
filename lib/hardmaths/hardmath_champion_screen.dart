@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:confetti/confetti.dart';
+<<<<<<< HEAD
 import 'package:mathverse/categories_page.dart';
 import 'package:mathverse/homepage.dart';
 import 'package:mathverse/sound_utils.dart';
+=======
+import 'package:quiz_app/categories_page.dart';
+import 'package:quiz_app/homepage.dart';
+>>>>>>> 4fdf84c0d4977d0f207eaca1662db8d5ee2820b1
 
 class MathChampionScreen extends StatefulWidget {
   const MathChampionScreen({super.key});
@@ -23,9 +28,12 @@ class _MathChampionScreenState extends State<MathChampionScreen>
     super.initState();
     _confettiController = ConfettiController(duration: Duration(seconds: 3));
     _confettiController.play();
+<<<<<<< HEAD
     Future.microtask(() async {
       await playSoundIfEnabled('sounds/math_champion.mp3');
     });
+=======
+>>>>>>> 4fdf84c0d4977d0f207eaca1662db8d5ee2820b1
 
     _glowController = AnimationController(
       vsync: this,
@@ -98,7 +106,11 @@ class _MathChampionScreenState extends State<MathChampionScreen>
                         borderRadius: BorderRadius.circular(30),
                       ),
                       child: Text(
+<<<<<<< HEAD
                         'ALL 30 LEVELS COMPLETED',
+=======
+                        'ALL 50 LEVELS COMPLETED',
+>>>>>>> 4fdf84c0d4977d0f207eaca1662db8d5ee2820b1
                         style: GoogleFonts.poppins(
                           color: Colors.white,
                           fontWeight: FontWeight.bold,
@@ -151,7 +163,11 @@ class _MathChampionScreenState extends State<MathChampionScreen>
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
+<<<<<<< HEAD
                                   '"Pure mathematics is, in its way, the poetry of logical ideas."',
+=======
+                                  '"Mathematics is not about numbers, equations, computations, or algorithms: it is about understanding."',
+>>>>>>> 4fdf84c0d4977d0f207eaca1662db8d5ee2820b1
                                   style: GoogleFonts.poppins(
                                     fontSize: 16,
                                     color: Colors.black87,
@@ -204,7 +220,11 @@ class _MathChampionScreenState extends State<MathChampionScreen>
                                   ),
                                   const SizedBox(height: 4),
                                   Text(
+<<<<<<< HEAD
                                     '30/30',
+=======
+                                    '50/50',
+>>>>>>> 4fdf84c0d4977d0f207eaca1662db8d5ee2820b1
                                     style: GoogleFonts.poppins(
                                       fontSize: 18,
                                       fontWeight: FontWeight.bold,
@@ -256,6 +276,17 @@ class _MathChampionScreenState extends State<MathChampionScreen>
                             MaterialPageRoute(builder: (_) => HomePage()),
                             (route) => false,
                           );
+<<<<<<< HEAD
+=======
+                          // Future.delayed(Duration(milliseconds: 100), () {
+                          //   Navigator.push(
+                          //     context,
+                          //     MaterialPageRoute(
+                          //       builder: (_) => CategoriesPage(),
+                          //     ),
+                          //   );
+                          // });
+>>>>>>> 4fdf84c0d4977d0f207eaca1662db8d5ee2820b1
                         },
                         style: ElevatedButton.styleFrom(
                           backgroundColor: Color(0xFF7A5DF5),
@@ -266,11 +297,23 @@ class _MathChampionScreenState extends State<MathChampionScreen>
                           ),
                         ),
                         child: Text(
+<<<<<<< HEAD
                           'Go Back',
+=======
+                          'Move to Hard Math Section',
+>>>>>>> 4fdf84c0d4977d0f207eaca1662db8d5ee2820b1
                           style: GoogleFonts.poppins(fontSize: 16),
                         ),
                       ),
                     ),
+<<<<<<< HEAD
+=======
+                    const SizedBox(height: 8),
+                    Text(
+                      'Ready for the next challenge?',
+                      style: GoogleFonts.poppins(color: Colors.black54),
+                    ),
+>>>>>>> 4fdf84c0d4977d0f207eaca1662db8d5ee2820b1
                   ],
                 ),
               ),

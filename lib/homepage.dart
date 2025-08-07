@@ -4,9 +4,12 @@ import 'package:google_fonts/google_fonts.dart';
 import 'categories_page.dart';
 import 'settings_page.dart';
 import 'dailychallenge/daily_challenge_page.dart';
+<<<<<<< HEAD
 import 'package:shared_preferences/shared_preferences.dart';
 import 'hardmaths/hardmath_quiz_page.dart';
 import 'package:mathverse/riddles/riddle_quiz_page.dart';
+=======
+>>>>>>> 4fdf84c0d4977d0f207eaca1662db8d5ee2820b1
 
 class HomePage extends StatelessWidget {
   final buttonTextStyle = GoogleFonts.poppins(
@@ -148,7 +151,23 @@ class HomePage extends StatelessWidget {
                   },
                   icon: Icons.play_circle_fill,
                   label: 'Play',
+<<<<<<< HEAD
                   color: Color(0xFF43A047),
+=======
+                  color: Colors.green,
+                ),
+                SizedBox(height: 15),
+                _buildAnimatedButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => DailyChallengePage()),
+                    );
+                  },
+                  icon: Icons.calendar_today,
+                  label: 'Daily Challenge',
+                  color: Colors.blue,
+>>>>>>> 4fdf84c0d4977d0f207eaca1662db8d5ee2820b1
                 ),
                 SizedBox(height: 15),
                 _buildAnimatedButton(
@@ -181,6 +200,16 @@ class HomePage extends StatelessWidget {
                 ),
                 SizedBox(height: 15),
                 _buildAnimatedButton(
+<<<<<<< HEAD
+=======
+                  onPressed: () {},
+                  icon: Icons.lock,
+                  label: 'Premium',
+                  color: Colors.amber,
+                ),
+                SizedBox(height: 15),
+                _buildAnimatedButton(
+>>>>>>> 4fdf84c0d4977d0f207eaca1662db8d5ee2820b1
                   onPressed: () {
                     Navigator.push(
                       context,
@@ -193,6 +222,7 @@ class HomePage extends StatelessWidget {
                   label: 'Settings',
                   color: Color(0xFF424242),
                 ),
+
                 SizedBox(height: 15),
                 _buildAnimatedButton(
                   onPressed: () {

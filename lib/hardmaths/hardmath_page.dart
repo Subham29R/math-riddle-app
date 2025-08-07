@@ -2,7 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'hardMath_quiz_page.dart';
+<<<<<<< HEAD
 import 'package:mathverse/main.dart';
+=======
+>>>>>>> 4fdf84c0d4977d0f207eaca1662db8d5ee2820b1
 
 class HardMathsPage extends StatefulWidget {
   const HardMathsPage({super.key});
@@ -11,7 +14,11 @@ class HardMathsPage extends StatefulWidget {
   State<HardMathsPage> createState() => _HardMathsPageState();
 }
 
+<<<<<<< HEAD
 class _HardMathsPageState extends State<HardMathsPage> with RouteAware {
+=======
+class _HardMathsPageState extends State<HardMathsPage> {
+>>>>>>> 4fdf84c0d4977d0f207eaca1662db8d5ee2820b1
   int completedLevels = 0;
 
   @override
@@ -22,6 +29,7 @@ class _HardMathsPageState extends State<HardMathsPage> with RouteAware {
   }
 
   @override
+<<<<<<< HEAD
   void dispose() {
     routeObserver.unsubscribe(this);
     super.dispose();
@@ -29,6 +37,10 @@ class _HardMathsPageState extends State<HardMathsPage> with RouteAware {
 
   @override
   void didPopNext() {
+=======
+  void didUpdateWidget(covariant HardMathsPage oldWidget) {
+    super.didUpdateWidget(oldWidget);
+>>>>>>> 4fdf84c0d4977d0f207eaca1662db8d5ee2820b1
     _loadProgress();
   }
 
@@ -139,6 +151,7 @@ class _HardMathsPageState extends State<HardMathsPage> with RouteAware {
                           isLocked
                               ? null
                               : () async {
+<<<<<<< HEAD
                                   await Navigator.push(
                                     context,
                                     MaterialPageRoute(
@@ -147,10 +160,24 @@ class _HardMathsPageState extends State<HardMathsPage> with RouteAware {
                                   );
                                   await _loadProgress();
                                 },
+=======
+                                await Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder:
+                                        (_) =>
+                                            HardMathQuizPage(startIndex: index),
+                                  ),
+                                );
+                                await _loadProgress();
+                              },
+
+>>>>>>> 4fdf84c0d4977d0f207eaca1662db8d5ee2820b1
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: isCurrent
-                            ? Colors.red
-                            : isCompleted
+                        backgroundColor:
+                            isCurrent
+                                ? Colors.red
+                                : isCompleted
                                 ? Colors.green
                                 : Colors.grey.shade300,
                         foregroundColor: isLocked ? Colors.grey.shade600 : Colors.white,
@@ -159,6 +186,7 @@ class _HardMathsPageState extends State<HardMathsPage> with RouteAware {
                         ),
                         padding: EdgeInsets.zero,
                       ),
+<<<<<<< HEAD
                       child: isLocked
                           ? Row(
                               mainAxisAlignment: MainAxisAlignment.center,
@@ -174,17 +202,35 @@ class _HardMathsPageState extends State<HardMathsPage> with RouteAware {
                                   style: GoogleFonts.poppins(
                                     fontWeight: FontWeight.bold,
                                     fontSize: 14,
+=======
+                      child:
+                          isLocked
+                              ? Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  const Icon(
+                                    Icons.lock,
+                                    size: 14,
+                                    color: Colors.grey,
+>>>>>>> 4fdf84c0d4977d0f207eaca1662db8d5ee2820b1
                                   ),
+                                  const SizedBox(width: 4),
+                                  Text(
+                                    '$level',
+                                    style: GoogleFonts.poppins(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 14,
+                                    ),
+                                  ),
+                                ],
+                              )
+                              : Text(
+                                '$level',
+                                style: GoogleFonts.poppins(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 16,
                                 ),
-                              ],
-                            )
-                          : Text(
-                              '$level',
-                              style: GoogleFonts.poppins(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 16,
                               ),
-                            ),
                     );
                   },
                 ),
@@ -216,11 +262,17 @@ class _HardMathsPageState extends State<HardMathsPage> with RouteAware {
                     await Navigator.push(
                       context,
                       MaterialPageRoute(
+<<<<<<< HEAD
                         builder: (_) => HardMathQuizPage(startIndex: completedLevels),
+=======
+                        builder:
+                            (_) => HardMathQuizPage(startIndex: completedLevels),
+>>>>>>> 4fdf84c0d4977d0f207eaca1662db8d5ee2820b1
                       ),
                     );
                     await _loadProgress();
                   },
+
                   style: ElevatedButton.styleFrom(
                     backgroundColor: const Color(0xFF7A5DF5),
                     foregroundColor: Colors.white,

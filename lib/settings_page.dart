@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+<<<<<<< HEAD
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:restart_app/restart_app.dart';
+=======
+>>>>>>> 4fdf84c0d4977d0f207eaca1662db8d5ee2820b1
 
 class SettingsScreen extends StatefulWidget {
   const SettingsScreen({super.key});
@@ -16,6 +19,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
   String themeMode = "Light mode";
 
   @override
+<<<<<<< HEAD
   void initState() {
     super.initState();
     _loadSoundSetting();
@@ -73,6 +77,8 @@ void _showNoAppDialog() {
 
 
   @override
+=======
+>>>>>>> 4fdf84c0d4977d0f207eaca1662db8d5ee2820b1
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
@@ -100,6 +106,7 @@ void _showNoAppDialog() {
               title: "Reset Progress",
               iconColor: Colors.redAccent,
               iconBackgroundColor: Colors.redAccent.withOpacity(0.1),
+<<<<<<< HEAD
               onTap: () {
                 showDialog(
                   context: context,
@@ -182,12 +189,17 @@ void _showNoAppDialog() {
               },
             ),
 
+=======
+              onTap: () {},
+            ),
+>>>>>>> 4fdf84c0d4977d0f207eaca1662db8d5ee2820b1
             buildToggleCardTile(
               icon: Icons.volume_up,
               title: "Sound",
               value: isSoundOn,
               iconBackgroundColor: const Color(0xFF7A5DF5).withOpacity(0.1),
               onChanged: (value) {
+<<<<<<< HEAD
                 _updateSoundSetting(value);
               },
             ),
@@ -196,17 +208,48 @@ void _showNoAppDialog() {
               title: "Contact Us",
               iconBackgroundColor: const Color(0xFF7A5DF5).withOpacity(0.1),
               onTap: _launchEmail,
+=======
+                setState(() {
+                  isSoundOn = value;
+                });
+              },
+            ),
+            buildCardTile(
+              icon: Icons.brightness_6,
+              title: "Theme",
+              subtitle: themeMode,
+              iconBackgroundColor: const Color(0xFF7A5DF5).withOpacity(0.1),
+              onTap: () {},
+            ),
+            buildCardTile(
+              icon: Icons.mail_outline,
+              title: "Contact Us",
+              iconBackgroundColor: const Color(0xFF7A5DF5).withOpacity(0.1),
+              onTap: () {},
+>>>>>>> 4fdf84c0d4977d0f207eaca1662db8d5ee2820b1
             ),
             const Spacer(),
             Column(
               children: [
                 Text(
+<<<<<<< HEAD
+=======
+                  "App Version 2.1.0",
+                  style: GoogleFonts.poppins(color: Colors.grey),
+                ),
+                const SizedBox(height: 5),
+                Text(
+>>>>>>> 4fdf84c0d4977d0f207eaca1662db8d5ee2820b1
                   "Made with 💜",
                   style: GoogleFonts.poppins(color: Colors.grey),
                 ),
                 const SizedBox(height: 20),
               ],
+<<<<<<< HEAD
             ),
+=======
+            )
+>>>>>>> 4fdf84c0d4977d0f207eaca1662db8d5ee2820b1
           ],
         ),
       ),
@@ -228,9 +271,14 @@ void _showNoAppDialog() {
         borderRadius: BorderRadius.circular(12),
         color: Colors.white,
         child: ListTile(
+<<<<<<< HEAD
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(12),
           ),
+=======
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+>>>>>>> 4fdf84c0d4977d0f207eaca1662db8d5ee2820b1
           leading: Container(
             padding: const EdgeInsets.all(10),
             decoration: BoxDecoration(
@@ -240,10 +288,16 @@ void _showNoAppDialog() {
             child: Icon(icon, color: iconColor, size: 24),
           ),
           title: Text(title, style: GoogleFonts.poppins()),
+<<<<<<< HEAD
           subtitle:
               subtitle != null
                   ? Text(subtitle, style: GoogleFonts.poppins())
                   : null,
+=======
+          subtitle: subtitle != null
+              ? Text(subtitle, style: GoogleFonts.poppins())
+              : null,
+>>>>>>> 4fdf84c0d4977d0f207eaca1662db8d5ee2820b1
           trailing: const Icon(Icons.arrow_forward_ios, size: 16),
           onTap: onTap,
         ),
@@ -266,9 +320,14 @@ void _showNoAppDialog() {
         borderRadius: BorderRadius.circular(12),
         color: Colors.white,
         child: ListTile(
+<<<<<<< HEAD
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(12),
           ),
+=======
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+>>>>>>> 4fdf84c0d4977d0f207eaca1662db8d5ee2820b1
           leading: Container(
             padding: const EdgeInsets.all(10),
             decoration: BoxDecoration(
