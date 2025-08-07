@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'hardMath_quiz_page.dart';
+import 'package:mathverse/main.dart';
 
 class HardMathsPage extends StatefulWidget {
   const HardMathsPage({super.key});
@@ -10,18 +11,24 @@ class HardMathsPage extends StatefulWidget {
   State<HardMathsPage> createState() => _HardMathsPageState();
 }
 
-class _HardMathsPageState extends State<HardMathsPage> {
+class _HardMathsPageState extends State<HardMathsPage> with RouteAware {
   int completedLevels = 0;
 
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
+    routeObserver.subscribe(this, ModalRoute.of(context)!);
     _loadProgress();
   }
 
   @override
-  void didUpdateWidget(covariant HardMathsPage oldWidget) {
-    super.didUpdateWidget(oldWidget);
+  void dispose() {
+    routeObserver.unsubscribe(this);
+    super.dispose();
+  }
+
+  @override
+  void didPopNext() {
     _loadProgress();
   }
 
@@ -76,7 +83,7 @@ class _HardMathsPageState extends State<HardMathsPage> {
                       ),
                     ),
                     Text(
-                      '$completedLevels/50 Levels',
+                      '$completedLevels/30 Levels',
                       style: GoogleFonts.poppins(
                         color: const Color(0xFF7A5DF5),
                         fontWeight: FontWeight.bold,
@@ -94,7 +101,7 @@ class _HardMathsPageState extends State<HardMathsPage> {
                   ),
                   child: FractionallySizedBox(
                     alignment: Alignment.centerLeft,
-                    widthFactor: completedLevels / 50,
+                    widthFactor: completedLevels / 30,
                     child: Container(
                       decoration: BoxDecoration(
                         color: const Color(0xFF7A5DF5),
@@ -114,7 +121,7 @@ class _HardMathsPageState extends State<HardMathsPage> {
               child: Padding(
                 padding: const EdgeInsets.all(16),
                 child: GridView.builder(
-                  itemCount: 50,
+                  itemCount: 30,
                   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 5,
                     mainAxisSpacing: 12,
@@ -132,58 +139,52 @@ class _HardMathsPageState extends State<HardMathsPage> {
                           isLocked
                               ? null
                               : () async {
-                                await Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder:
-                                        (_) =>
-                                            HardMathQuizPage(startIndex: index),
-                                  ),
-                                );
-                                await _loadProgress();
-                              },
-
+                                  await Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (_) => HardMathQuizPage(startIndex: index),
+                                    ),
+                                  );
+                                  await _loadProgress();
+                                },
                       style: ElevatedButton.styleFrom(
-                        backgroundColor:
-                            isCurrent
-                                ? Colors.red
-                                : isCompleted
+                        backgroundColor: isCurrent
+                            ? Colors.red
+                            : isCompleted
                                 ? Colors.green
                                 : Colors.grey.shade300,
-                        foregroundColor:
-                            isLocked ? Colors.grey.shade600 : Colors.white,
+                        foregroundColor: isLocked ? Colors.grey.shade600 : Colors.white,
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(9),
                         ),
                         padding: EdgeInsets.zero,
                       ),
-                      child:
-                          isLocked
-                              ? Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  const Icon(
-                                    Icons.lock,
-                                    size: 14,
-                                    color: Colors.grey,
-                                  ),
-                                  const SizedBox(width: 4),
-                                  Text(
-                                    '$level',
-                                    style: GoogleFonts.poppins(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 14,
-                                    ),
-                                  ),
-                                ],
-                              )
-                              : Text(
-                                '$level',
-                                style: GoogleFonts.poppins(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 16,
+                      child: isLocked
+                          ? Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                const Icon(
+                                  Icons.lock,
+                                  size: 14,
+                                  color: Colors.grey,
                                 ),
+                                const SizedBox(width: 4),
+                                Text(
+                                  '$level',
+                                  style: GoogleFonts.poppins(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 14,
+                                  ),
+                                ),
+                              ],
+                            )
+                          : Text(
+                              '$level',
+                              style: GoogleFonts.poppins(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 16,
                               ),
+                            ),
                     );
                   },
                 ),
@@ -215,13 +216,11 @@ class _HardMathsPageState extends State<HardMathsPage> {
                     await Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder:
-                            (_) => HardMathQuizPage(startIndex: completedLevels),
+                        builder: (_) => HardMathQuizPage(startIndex: completedLevels),
                       ),
                     );
                     await _loadProgress();
                   },
-
                   style: ElevatedButton.styleFrom(
                     backgroundColor: const Color(0xFF7A5DF5),
                     foregroundColor: Colors.white,

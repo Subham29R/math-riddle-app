@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'riddle_quiz_page.dart';
+import 'package:mathverse/main.dart';
 
 class RiddlesPage extends StatefulWidget {
   const RiddlesPage({super.key});
@@ -10,18 +11,30 @@ class RiddlesPage extends StatefulWidget {
   State<RiddlesPage> createState() => _RiddlesPageState();
 }
 
-class _RiddlesPageState extends State<RiddlesPage> {
+class _RiddlesPageState extends State<RiddlesPage> with RouteAware {
   int completedLevels = 0;
 
   @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
+  void initState() {
+    super.initState();
     _loadProgress();
   }
 
   @override
-  void didUpdateWidget(covariant RiddlesPage oldWidget) {
-    super.didUpdateWidget(oldWidget);
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    routeObserver.subscribe(this, ModalRoute.of(context)!);
+  }
+
+  @override
+  void dispose() {
+    routeObserver.unsubscribe(this); 
+    super.dispose();
+  }
+
+  @override
+  void didPopNext() {
+    // ✅ Called when returning to this screen
     _loadProgress();
   }
 
@@ -128,26 +141,21 @@ class _RiddlesPageState extends State<RiddlesPage> {
                     final isLocked = level > completedLevels + 1;
 
                     return ElevatedButton(
-                      onPressed:
-                          isLocked
-                              ? null
-                              : () async {
-                                await Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder:
-                                        (_) =>
-                                            RiddleQuizPage(startIndex: index),
-                                  ),
-                                );
-                                await _loadProgress();
-                              },
-
+                      onPressed: isLocked
+                          ? null
+                          : () async {
+                              await Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (_) => RiddleQuizPage(startIndex: index),
+                                ),
+                              );
+                              await _loadProgress();
+                            },
                       style: ElevatedButton.styleFrom(
-                        backgroundColor:
-                            isCurrent
-                                ? Colors.amber
-                                : isCompleted
+                        backgroundColor: isCurrent
+                            ? Colors.amber
+                            : isCompleted
                                 ? Colors.green
                                 : Colors.grey.shade300,
                         foregroundColor:
@@ -157,33 +165,32 @@ class _RiddlesPageState extends State<RiddlesPage> {
                         ),
                         padding: EdgeInsets.zero,
                       ),
-                      child:
-                          isLocked
-                              ? Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  const Icon(
-                                    Icons.lock,
-                                    size: 14,
-                                    color: Colors.grey,
-                                  ),
-                                  const SizedBox(width: 4),
-                                  Text(
-                                    '$level',
-                                    style: GoogleFonts.poppins(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 14,
-                                    ),
-                                  ),
-                                ],
-                              )
-                              : Text(
-                                '$level',
-                                style: GoogleFonts.poppins(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 16,
+                      child: isLocked
+                          ? Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                const Icon(
+                                  Icons.lock,
+                                  size: 14,
+                                  color: Colors.grey,
                                 ),
+                                const SizedBox(width: 4),
+                                Text(
+                                  '$level',
+                                  style: GoogleFonts.poppins(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 14,
+                                  ),
+                                ),
+                              ],
+                            )
+                          : Text(
+                              '$level',
+                              style: GoogleFonts.poppins(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 16,
                               ),
+                            ),
                     );
                   },
                 ),
@@ -205,7 +212,7 @@ class _RiddlesPageState extends State<RiddlesPage> {
                       style: GoogleFonts.poppins(color: Colors.black54),
                     ),
                     Text(
-                      'Level ${completedLevels + 1}',
+                      'Level ${completedLevels < 50 ? completedLevels + 1 : 50}',
                       style: GoogleFonts.poppins(fontWeight: FontWeight.bold),
                     ),
                   ],
@@ -215,13 +222,11 @@ class _RiddlesPageState extends State<RiddlesPage> {
                     await Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder:
-                            (_) => RiddleQuizPage(startIndex: completedLevels),
+                        builder: (_) => RiddleQuizPage(startIndex: completedLevels),
                       ),
                     );
                     await _loadProgress();
                   },
-
                   style: ElevatedButton.styleFrom(
                     backgroundColor: const Color(0xFF7A5DF5),
                     foregroundColor: Colors.white,

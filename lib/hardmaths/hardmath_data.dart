@@ -1,110 +1,60 @@
 import 'hardMath_question_model.dart';
 
 final List<HardMathQuestion> hardMathQuestions = [
-  HardMathQuestion(question: "What comes after 1, 3, 5, 7?", answer: "9"),
+  HardMathQuestion(question: "5–[4–(3–(3–3–6))] is equal to", answer: "10"),
+  HardMathQuestion(question: "3,8,27,112,?,3396", answer: "565"),
   HardMathQuestion(
     question:
-        "I am a number. Multiply me by 4 and subtract 6, and you get 18. What number am I?",
-    answer: "6",
+        "The square of a natural number subtracted from its cube is 48. The number is",
+    answer: "4",
   ),
+  HardMathQuestion(question: "3,18,12,72,66,396,?", answer: "390"),
+  HardMathQuestion(
+    question: "If 1120/√(p)=80,then P is equal to",
+    answer: "196",
+  ),
+  HardMathQuestion(question: "1,2,6,24,?", answer: "120"),
   HardMathQuestion(
     question:
-        "What number do you get when you multiply all the numbers on a telephone dial pad?",
-    answer: "0",
+        "The digit in unit's place of the number\n(1570)² + (1571)² + (1572)² + (1573)² is",
+    answer: "4",
   ),
+  HardMathQuestion(question: "51,52,56,65,?", answer: "81"),
   HardMathQuestion(
-    question: "How many times can you subtract the number 5 from 25?",
-    answer: "1",
-  ),
-  HardMathQuestion(
-    question:
-        "I am a 2-digit number. My tens digit is 3 more than my units digit. My digits add up to 9. What am I?",
-    answer: "36",
-  ),
-  HardMathQuestion(question: "7=13\n11=21\n16=?", answer: "31"),
-  HardMathQuestion(
-    question:
-        "Turn me on my side, and I am everything. Cut me in half and I am nothing. What am I?",
-    answer: "8",
-  ),
-  HardMathQuestion(
-    question:
-        "A couple went for a picnic. They have 5 sons, and each son has three sisters. Each sister has one baby. In total, how many people went to the picnic?",
-    answer: "13",
-  ),
-  HardMathQuestion(question: "1, 8, 27, ?", answer: "64"),
-  HardMathQuestion(question: "7645, 5764, 4576", answer: "6457"),
-  HardMathQuestion(
-    question:
-        "If three kids eat three pizzas in three minutes, how many pizzas will six kids eat in six minutes?",
-    answer: "12",
-  ),
-  HardMathQuestion(
-    question:
-        "There are seven people at a party. Each shakes hands once with each other. How many handshakes in total?",
-    answer: "21",
-  ),
-  HardMathQuestion(question: "7=13\n11=20\n16=29\n20=?", answer: "36"),
-  HardMathQuestion(question: "3, 5=34\n8,2=68\n4,6=52\n5,1=?", answer: "26"), 
-  HardMathQuestion(question: "0, 1, 1, 2, 3, 5, ?", answer: "8"),
-  HardMathQuestion(
-    question:
-        "Three times what number is not larger than two times the same number?",
-    answer: "0",
-  ),
-  HardMathQuestion(
-    question:
-        "I am a number, but when you add 'G' to me, I go away. What number am I?",
-    answer: "1",
-  ),
-  HardMathQuestion(
-    question: "How many 9's are there between 1 and 100?",
-    answer: "20",
-  ),
-  HardMathQuestion(question: "1, 12, 36, ?", answer: "80"),
-  HardMathQuestion(question: "120, ?, 6, 2, 1", answer: "24"),
-  HardMathQuestion(question: "1, 27, 125, ?", answer: "343"),
-  HardMathQuestion(question: "32=25\n47=18\n23=52\n74=?", answer: "81"),
-  HardMathQuestion(question: "7=15\n11=20\n16=35\n20=?", answer: "16"),
-  HardMathQuestion(question: "3,5=6\n8,2=4\n4,6=8\n5,1=?", answer: "2"), 
-  HardMathQuestion(
-    question: "9,16 = 1\n4,36 = 4\n81,121 = 2\n25,49 = ?", 
-    answer: "2",
-  ),
-  HardMathQuestion(
-    question:
-        "What is the four-digit number where the first digit is one-fourth of the last digit? The second digit is 6 times the first, third is second plus 3.",
-    answer: "1694",
-  ),
-  HardMathQuestion(question: "47,53,59,61,?", answer: "67"),
-  HardMathQuestion(
-    question:
-        "2,12,30,?",
-    answer: "56",
-  ),
-  HardMathQuestion(
-    question: "21,6 = 9\n11,7 = 6\n36,3 = 13\n1,8 = ?", 
+    question: "4⁶¹ + 4⁶² + 4⁶³ is divisible by which smallest number?",
     answer: "3",
   ),
-  HardMathQuestion(question: "343, ?, 27, 1", answer: "125"),
-  HardMathQuestion(question: '', imagePath: 'assets/31.jpg', answer: '30'),
-  HardMathQuestion(question: '', imagePath: 'assets/32.jpg', answer: '13'),
-  HardMathQuestion(question: '', imagePath: 'assets/33.jpg', answer: '64'),
-  HardMathQuestion(question: '', imagePath: 'assets/34.jpg', answer: '17'),
-  HardMathQuestion(question: '', imagePath: 'assets/35.jpg', answer: '204'),
-  HardMathQuestion(question: '', imagePath: 'assets/36.jpg', answer: '3'),
-  HardMathQuestion(question: '', imagePath: 'assets/37.jpg', answer: '4'),
-  HardMathQuestion(question: '', imagePath: 'assets/38.jpg', answer: '22'),
-  HardMathQuestion(question: '', imagePath: 'assets/39.jpg', answer: '6'),
-  HardMathQuestion(question: '', imagePath: 'assets/40.jpg', answer: '9'),
-  HardMathQuestion(question: '', imagePath: 'assets/41.jpg', answer: '15'),
-  HardMathQuestion(question: '', imagePath: 'assets/42.jpg', answer: '37'),
-  HardMathQuestion(question: '', imagePath: 'assets/43.jpg', answer: '75'),
-  HardMathQuestion(question: '', imagePath: 'assets/44.jpg', answer: '65'),
-  HardMathQuestion(question: '', imagePath: 'assets/45.jpg', answer: '31'),
-  HardMathQuestion(question: '', imagePath: 'assets/46.jpg', answer: '30'),
-  HardMathQuestion(question: '', imagePath: 'assets/47.jpg', answer: '143'),
-  HardMathQuestion(question: '', imagePath: 'assets/48.jpg', answer: '14'),
-  HardMathQuestion(question: '', imagePath: 'assets/49.jpg', answer: '13'),
-  HardMathQuestion(question: '', imagePath: 'assets/50.jpg', answer: '8'),
+  HardMathQuestion(question: "2,8,18,?,50", answer: "32"),
+  HardMathQuestion(
+    question: "When 10¹⁰⁰ is divided by 7, the remainder is?",
+    answer: "4",
+  ),
+  HardMathQuestion(
+    question: "Find the unit digit in the product :- (4387)²⁴⁵ × (621)⁷²",
+    answer: "7",
+  ),
+  HardMathQuestion(question: "7=13\n12=28\n22=38\n42=?", answer: "38"),
+  HardMathQuestion(question: "38,49,89,3??", answer: "88"),
+  HardMathQuestion(question: "25=121\n36=207\n47=327\n28=?", answer: "508"),
+  HardMathQuestion(
+    question: "15,5,3 = 34\n8,3,7 = 35\n18,3,5 = ?",
+    answer: "39",
+  ),
+  HardMathQuestion(question: "589 = 476\n666 = 543\n687 = ?", answer: "564"),
+  HardMathQuestion(question: "132,138,150,156,?", answer: "168"),
+  HardMathQuestion(
+    question: " 6,3,9 = 2\n9,4,3 = 12\n4,7,2 = 14\n8,1,4 = ?",
+    answer: "2",
+  ),
+  HardMathQuestion(question: '343, ?, 27, 1', answer: '125'),
+  HardMathQuestion(question: '', imagePath: 'assets/51.jpg', answer: '21'),
+  HardMathQuestion(question: '', imagePath: 'assets/52.jpg', answer: '7'),
+  HardMathQuestion(question: '', imagePath: 'assets/53.jpg', answer: '15'),
+  HardMathQuestion(question: '', imagePath: 'assets/54.jpg', answer: '8'),
+  HardMathQuestion(question: '', imagePath: 'assets/55.jpg', answer: '10'),
+  HardMathQuestion(question: '', imagePath: 'assets/56.jpg', answer: '8079'),
+  HardMathQuestion(question: '', imagePath: 'assets/57.jpg', answer: '3'),
+  HardMathQuestion(question: '', imagePath: 'assets/58.jpg', answer: '30'),
+  HardMathQuestion(question: '', imagePath: 'assets/59.jpg', answer: '9'),
+  HardMathQuestion(question: '', imagePath: 'assets/60.jpg', answer: '17'),
 ];

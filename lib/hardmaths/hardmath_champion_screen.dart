@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:confetti/confetti.dart';
-import 'package:quiz_app/categories_page.dart';
-import 'package:quiz_app/homepage.dart';
+import 'package:mathverse/categories_page.dart';
+import 'package:mathverse/homepage.dart';
+import 'package:mathverse/sound_utils.dart';
 
 class MathChampionScreen extends StatefulWidget {
   const MathChampionScreen({super.key});
@@ -22,6 +23,9 @@ class _MathChampionScreenState extends State<MathChampionScreen>
     super.initState();
     _confettiController = ConfettiController(duration: Duration(seconds: 3));
     _confettiController.play();
+    Future.microtask(() async {
+      await playSoundIfEnabled('sounds/math_champion.mp3');
+    });
 
     _glowController = AnimationController(
       vsync: this,
@@ -94,7 +98,7 @@ class _MathChampionScreenState extends State<MathChampionScreen>
                         borderRadius: BorderRadius.circular(30),
                       ),
                       child: Text(
-                        'ALL 50 LEVELS COMPLETED',
+                        'ALL 30 LEVELS COMPLETED',
                         style: GoogleFonts.poppins(
                           color: Colors.white,
                           fontWeight: FontWeight.bold,
@@ -147,7 +151,7 @@ class _MathChampionScreenState extends State<MathChampionScreen>
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  '"Mathematics is not about numbers, equations, computations, or algorithms: it is about understanding."',
+                                  '"Pure mathematics is, in its way, the poetry of logical ideas."',
                                   style: GoogleFonts.poppins(
                                     fontSize: 16,
                                     color: Colors.black87,
@@ -200,7 +204,7 @@ class _MathChampionScreenState extends State<MathChampionScreen>
                                   ),
                                   const SizedBox(height: 4),
                                   Text(
-                                    '50/50',
+                                    '30/30',
                                     style: GoogleFonts.poppins(
                                       fontSize: 18,
                                       fontWeight: FontWeight.bold,
@@ -252,14 +256,6 @@ class _MathChampionScreenState extends State<MathChampionScreen>
                             MaterialPageRoute(builder: (_) => HomePage()),
                             (route) => false,
                           );
-                          // Future.delayed(Duration(milliseconds: 100), () {
-                          //   Navigator.push(
-                          //     context,
-                          //     MaterialPageRoute(
-                          //       builder: (_) => CategoriesPage(),
-                          //     ),
-                          //   );
-                          // });
                         },
                         style: ElevatedButton.styleFrom(
                           backgroundColor: Color(0xFF7A5DF5),
@@ -270,15 +266,10 @@ class _MathChampionScreenState extends State<MathChampionScreen>
                           ),
                         ),
                         child: Text(
-                          'Move to Hard Math Section',
+                          'Go Back',
                           style: GoogleFonts.poppins(fontSize: 16),
                         ),
                       ),
-                    ),
-                    const SizedBox(height: 8),
-                    Text(
-                      'Ready for the next challenge?',
-                      style: GoogleFonts.poppins(color: Colors.black54),
                     ),
                   ],
                 ),

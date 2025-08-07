@@ -3,8 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'riddle_data.dart';
 import 'riddle_success_page.dart';
-import 'math_champion_screen.dart';
-import 'package:quiz_app/dialog/hint_options_dialog.dart';
+import 'package:mathverse/dialog/hint_options_dialog.dart';
 import 'riddle_hint_data.dart';
 
 class RiddleQuizPage extends StatefulWidget {
@@ -25,15 +24,21 @@ class _RiddleQuizPageState extends State<RiddleQuizPage> {
   @override
   void initState() {
     super.initState();
+    _saveLastPlayedProgress();
     _controller.addListener(() {
       setState(() {});
     });
   }
 
+  Future<void> _saveLastPlayedProgress() async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setString('lastPlayedSection', 'riddle');
+    await prefs.setInt('lastPlayedIndex', widget.startIndex);
+  }
+
   Future<void> _checkAnswer() async {
     final userAnswer = _controller.text.trim().toLowerCase();
-    final correctAnswer =
-        riddleQuestions[widget.startIndex].answer.trim().toLowerCase();
+    final correctAnswer = riddleQuestions[widget.startIndex].answer.trim().toLowerCase();
 
     setState(() {
       _isAnswerCorrect = userAnswer == correctAnswer;
@@ -47,28 +52,14 @@ class _RiddleQuizPageState extends State<RiddleQuizPage> {
         await prefs.setInt('riddle_completed', widget.startIndex + 1);
       }
 
-      await Navigator.push(
+      if (!mounted) return;
+
+      await Navigator.pushReplacement(
         context,
         MaterialPageRoute(
           builder: (_) => RiddleSuccessPage(nextIndex: widget.startIndex + 1),
         ),
       );
-
-      if (!mounted) return;
-
-      if (widget.startIndex + 1 == 50) {
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(builder: (_) => MathChampionScreen()),
-        );
-      } else {
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(
-            builder: (_) => RiddleQuizPage(startIndex: widget.startIndex + 1),
-          ),
-        );
-      }
     }
   }
 
@@ -94,39 +85,37 @@ class _RiddleQuizPageState extends State<RiddleQuizPage> {
   @override
   Widget build(BuildContext context) {
     final riddle = riddleQuestions[widget.startIndex];
-
     final isScrollable = widget.startIndex >= 30;
 
     final content = Column(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      mainAxisAlignment: MainAxisAlignment.start,
       children: [
         Column(
           children: [
             const SizedBox(height: 8),
             widget.startIndex >= 30 && riddle.imagePath != null
                 ? ClipRRect(
-                  borderRadius: BorderRadius.circular(12),
-                  child: Image.asset(
-                    riddle.imagePath!,
-                    fit: BoxFit.contain,
-                    width: double.infinity,
-                    height: 200,
-                  ),
-                )
+                    borderRadius: BorderRadius.circular(12),
+                    child: Image.asset(
+                      riddle.imagePath!,
+                      fit: BoxFit.contain,
+                      width: double.infinity,
+                      height: 200,
+                    ),
+                  )
                 : Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16),
-                  child: Text(
-                    riddle.question,
-                    textAlign: TextAlign.justify,
-                    style: GoogleFonts.poppins(
-                      fontSize: 19,
-                      fontWeight: FontWeight.w600,
-                      color: Colors.black87,
-                      height: 1.5,
+                    padding: const EdgeInsets.symmetric(horizontal: 16),
+                    child: Text(
+                      riddle.question,
+                      textAlign: TextAlign.justify,
+                      style: GoogleFonts.poppins(
+                        fontSize: 19,
+                        fontWeight: FontWeight.w600,
+                        color: Colors.black87,
+                        height: 1.5,
+                      ),
                     ),
                   ),
-                ),
-
             const SizedBox(height: 16),
             Text(
               _controller.text,
@@ -141,39 +130,30 @@ class _RiddleQuizPageState extends State<RiddleQuizPage> {
           ],
         ),
         const SizedBox(height: 10),
+        const Spacer(),
         Column(
           children: [
             ElevatedButton(
               onPressed: () {
                 showDialog(
                   context: context,
-                  builder:
-                      (_) => HintOptionsDialog(
-                        hasWatchedHint: hasWatchedHint,
-                        onHintAd: () {
-                          setState(() {
-                            hasWatchedHint = true;
-                          });
-                          print("Hint ad triggered");
-                        },
-
-                        onSolutionAd: () {
-                          print("Solution ad triggered");
-                        },
-                        hintText: riddleHintList[widget.startIndex].hint,
-                        solutionText:
-                            riddleHintList[widget.startIndex].solution,
-                      ),
+                  builder: (_) => HintOptionsDialog(
+                    hasWatchedHint: hasWatchedHint,
+                    onHintAd: () {
+                      setState(() {
+                        hasWatchedHint = true;
+                      });
+                    },
+                    onSolutionAd: () {},
+                    hintText: riddleHintList[widget.startIndex].hint,
+                    solutionText: riddleHintList[widget.startIndex].solution,
+                  ),
                 );
               },
-
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.amber,
                 foregroundColor: Colors.white,
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 32,
-                  vertical: 12,
-                ),
+                padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 12),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(8),
                 ),
@@ -181,13 +161,12 @@ class _RiddleQuizPageState extends State<RiddleQuizPage> {
               child: Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  Icon(Icons.lightbulb, color: Colors.white, size: 20),
-                  SizedBox(width: 8),
+                  const Icon(Icons.lightbulb, color: Colors.white, size: 20),
+                  const SizedBox(width: 8),
                   Text('Hint', style: GoogleFonts.poppins()),
                 ],
               ),
             ),
-
             const SizedBox(height: 16),
             Container(
               padding: const EdgeInsets.all(16),
@@ -220,8 +199,7 @@ class _RiddleQuizPageState extends State<RiddleQuizPage> {
                   SizedBox(
                     width: double.infinity,
                     child: ElevatedButton.icon(
-                      onPressed:
-                          _controller.text.trim().isEmpty ? null : _checkAnswer,
+                      onPressed: _controller.text.trim().isEmpty ? null : _checkAnswer,
                       icon: const Icon(Icons.check),
                       label: Text(
                         'Enter',
@@ -266,7 +244,9 @@ class _RiddleQuizPageState extends State<RiddleQuizPage> {
                 children: [
                   IconButton(
                     icon: const Icon(Icons.arrow_back, color: Colors.white),
-                    onPressed: () => Navigator.pop(context),
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
                   ),
                   const SizedBox(width: 4),
                   Text(
@@ -295,14 +275,20 @@ class _RiddleQuizPageState extends State<RiddleQuizPage> {
               child: Container(
                 width: double.infinity,
                 color: Colors.white,
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 24,
-                  vertical: 16,
-                ),
-                child:
-                    isScrollable
-                        ? SingleChildScrollView(child: content)
-                        : content,
+                padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+                child: isScrollable
+                    ? LayoutBuilder(
+                        builder: (context, constraints) {
+                          return SingleChildScrollView(
+                            physics: const BouncingScrollPhysics(),
+                            child: ConstrainedBox(
+                              constraints: BoxConstraints(minHeight: constraints.maxHeight),
+                              child: IntrinsicHeight(child: content),
+                            ),
+                          );
+                        },
+                      )
+                    : Column(children: [Expanded(child: content)]),
               ),
             ),
           ],
@@ -329,10 +315,9 @@ class _RiddleQuizPageState extends State<RiddleQuizPage> {
           ),
           padding: const EdgeInsets.symmetric(vertical: 4),
         ),
-        child:
-            icon != null
-                ? Icon(icon)
-                : Text(value, style: GoogleFonts.poppins(fontSize: 18)),
+        child: icon != null
+            ? Icon(icon)
+            : Text(value, style: GoogleFonts.poppins(fontSize: 18)),
       ),
     );
   }

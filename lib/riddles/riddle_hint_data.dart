@@ -52,7 +52,7 @@ final List<RiddleHintData> riddleHintList = [
   ),
   RiddleHintData(hint: "Cubes of odd numbers.", solution: "7³ = 343."),
   RiddleHintData(hint: "Reverse and play with it.", solution: "Reverse of 18 is 81."),
-  RiddleHintData(hint: "+1,-2 Pattern", solution: "20 - 4 = 16."),
+  RiddleHintData(hint: "+1,-2 Pattern", solution: "20*2-4 = 36→ANS"),
   RiddleHintData(hint: "(a+b)-(a-b)", solution: "6 - 4 = 2."),
   RiddleHintData(
     hint: "Think square roots.",
@@ -89,7 +89,7 @@ final List<RiddleHintData> riddleHintList = [
   RiddleHintData(hint: "a³ + 1", solution: "a³ + 1 = 730 → a = 9"),
   RiddleHintData(hint: "a + b", solution: "10 + 5 = 15"),
   RiddleHintData(hint: "Prime number", solution: "Next prime after 33 is 37"),
-  RiddleHintData(hint: "Multiply by center number", solution: "15 × 5 = 75"),
+  RiddleHintData(hint: "Multiply by center number", solution: "15*5 = 75→ANS"),
   RiddleHintData(hint: "a²−1, a²+1 pattern", solution: "8² + 1 = 65"),
   RiddleHintData(hint: "a² − 1", solution: "5² − 1 = 24"),
   RiddleHintData(

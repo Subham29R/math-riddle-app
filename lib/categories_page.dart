@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:quiz_app/hardmaths/hardmath_page.dart';
-import 'package:quiz_app/riddles/riddles_page.dart';
+import 'package:mathverse/hardmaths/hardmath_page.dart';
+import 'package:mathverse/riddles/riddles_page.dart';
 import 'quick_math_countdown.dart';
 import 'animated_play_button.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
 
 class CategoriesPage extends StatelessWidget {
   @override
@@ -244,12 +246,44 @@ class CategoriesPage extends StatelessWidget {
                       SizedBox(
                         width: double.infinity,
                         child: AnimatedPlayButton(
-                          onPressed: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(builder: (_) => HardMathsPage()),
-                            );
+                          onPressed: () async {
+                            final prefs = await SharedPreferences.getInstance();
+                            final completed =
+                                prefs.getInt('riddle_completed') ?? 0;
+
+                            if (completed < 50) {
+                              showDialog(
+                                context: context,
+                                builder:
+                                    (_) => AlertDialog(
+                                      title: Text(
+                                        'Locked',
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                      content: Text(
+                                        'Please complete all 50 levels of Riddles Math before unlocking Hard Math.',
+                                      ),
+                                      actions: [
+                                        TextButton(
+                                          onPressed:
+                                              () => Navigator.pop(context),
+                                          child: Text('OK'),
+                                        ),
+                                      ],
+                                    ),
+                              );
+                            } else {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (_) => HardMathsPage(),
+                                ),
+                              );
+                            }
                           },
+
                           color: Colors.red,
                         ),
                       ),
