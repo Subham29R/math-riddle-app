@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:confetti/confetti.dart';
-import 'package:quiz_app/categories_page.dart';
-import 'package:quiz_app/homepage.dart';
+import 'package:mathverse/categories_page.dart';
+import 'package:mathverse/sound_utils.dart';
 
 class MathChampionScreen extends StatefulWidget {
   const MathChampionScreen({super.key});
@@ -22,6 +22,9 @@ class _MathChampionScreenState extends State<MathChampionScreen>
     super.initState();
     _confettiController = ConfettiController(duration: Duration(seconds: 3));
     _confettiController.play();
+    Future.microtask(() async {
+      await playSoundIfEnabled('sounds/math_champion.mp3');
+    });
 
     _glowController = AnimationController(
       vsync: this,
@@ -249,9 +252,10 @@ class _MathChampionScreenState extends State<MathChampionScreen>
                         onPressed: () {
                           Navigator.pushAndRemoveUntil(
                             context,
-                            MaterialPageRoute(builder: (_) => HomePage()),
-                            (route) => false,
+                            MaterialPageRoute(builder: (_) => CategoriesPage()),
+                            (route) => route.isFirst,
                           );
+
                           // Future.delayed(Duration(milliseconds: 100), () {
                           //   Navigator.push(
                           //     context,

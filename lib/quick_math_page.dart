@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'result_page.dart';
 import 'milestone_popup.dart';
+import 'final_completion_page.dart';
 
 class QuickMathPage extends StatefulWidget {
   @override
@@ -110,8 +111,15 @@ class _QuickMathPageState extends State<QuickMathPage> with TickerProviderStateM
     _hintAnimController.reset();
     _hintAnimController.stop();
 
-    int a = _random.nextInt(10) + 1;
-    int b = _random.nextInt(10) + 1;
+    int a, b;
+    if (_score < 70) {
+      a = _random.nextInt(10) + 1;
+      b = _random.nextInt(10) + 1;
+    } else {
+      a = _random.nextInt(90) + 10;
+      b = _random.nextInt(90) + 10;
+    }
+
     int answer;
     String q;
     String explanation;
@@ -203,6 +211,74 @@ class _QuickMathPageState extends State<QuickMathPage> with TickerProviderStateM
   }
 
   void _handleAnswer(int selected) async {
+<<<<<<< HEAD
+    if (_showingMilestone) return;
+
+    if (selected == _correctAnswer) {
+      _controller.stop();
+
+      int nextScore = _score + 1;
+
+      int newTimerDuration;
+      if (nextScore <= 10)
+        newTimerDuration = 10;
+      else if (nextScore <= 20)
+        newTimerDuration = 9;
+      else if (nextScore <= 30)
+        newTimerDuration = 8;
+      else if (nextScore <= 40)
+        newTimerDuration = 7;
+      else if (nextScore <= 50)
+        newTimerDuration = 6;
+      else
+        newTimerDuration = 5;
+
+      bool isMilestone = [11, 21, 31, 41, 51].contains(nextScore);
+      setState(() {
+        _score = nextScore;
+      });
+
+      if (_score == 100) {
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (_) => FinalCompletionPage()),
+        );
+        return;
+      }
+
+      if (isMilestone) {
+        _showingMilestone = true;
+        await Future.delayed(Duration(milliseconds: 200)); // Ensure UI updates
+        await Navigator.push(
+          context,
+          PageRouteBuilder(
+            opaque: false,
+            barrierDismissible: false,
+            pageBuilder:
+                (_, __, ___) => MilestonePopup(
+                  newTimerValue: newTimerDuration,
+                  level: _score,
+                ),
+          ),
+        );
+        _showingMilestone = false;
+      }
+
+      _generateQuestion();
+    } else {
+      _goToResult(
+        wasWrong: true,
+        question: _question,
+        yourAnswer:
+            _isBooleanQuestion
+                ? (selected == 1 ? "True" : "False")
+                : selected.toString(),
+        correctAnswer:
+            _isBooleanQuestion
+                ? (_correctAnswer == 1 ? "True" : "False")
+                : _correctAnswer.toString(),
+        explanation: _explanation,
+=======
   if (_showingMilestone) return;
 
   if (selected == _correctAnswer) {
@@ -243,6 +319,7 @@ class _QuickMathPageState extends State<QuickMathPage> with TickerProviderStateM
             level: newScore,
           ),
         ),
+>>>>>>> 4fdf84c0d4977d0f207eaca1662db8d5ee2820b1
       );
 
       _showingMilestone = false;
@@ -396,6 +473,8 @@ class _QuickMathPageState extends State<QuickMathPage> with TickerProviderStateM
                 ],
               ),
             ),
+<<<<<<< HEAD
+=======
             Positioned(
               bottom: 20,
               left: 0,
@@ -415,6 +494,7 @@ class _QuickMathPageState extends State<QuickMathPage> with TickerProviderStateM
                 ),
               ),
             ),
+>>>>>>> 4fdf84c0d4977d0f207eaca1662db8d5ee2820b1
           ],
         ),
       ),

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'homepage.dart'; 
+import 'splash_screen.dart';
+
+final RouteObserver<ModalRoute<void>> routeObserver = RouteObserver<ModalRoute<void>>();
 
 void main() => runApp(MathRiddlesApp());
 
@@ -9,7 +11,8 @@ class MathRiddlesApp extends StatelessWidget {
     return MaterialApp(
       title: 'Math Riddles',
       debugShowCheckedModeBanner: false,
-      home: HomePage(), 
+      home: SplashScreen(),
+      navigatorObservers: [routeObserver],
     );
   }
 }

@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:confetti/confetti.dart';
 import 'dart:math';
 import 'categories_page.dart';
+import 'package:mathverse/sound_utils.dart';
+import 'package:flutter/services.dart';
 
 class ResultPage extends StatefulWidget {
   final int score;
@@ -32,12 +34,19 @@ class _ResultPageState extends State<ResultPage> {
   @override
   void initState() {
     super.initState();
+    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+      statusBarColor: Colors.transparent,
+      statusBarIconBrightness: Brightness.light,
+    ));
     _confettiController = ConfettiController(
       duration: const Duration(seconds: 3),
     );
 
     if (widget.score > widget.bestScore) {
       _confettiController.play();
+      Future.microtask(() async {
+        await playSoundIfEnabled('sounds/math_champion.mp3');
+      });
     }
   }
 
@@ -50,7 +59,7 @@ class _ResultPageState extends State<ResultPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color.fromARGB(255, 96, 34, 228),
+      backgroundColor: Color(0xFF7A5DF5),
       body: SafeArea(
         child: Stack(
           alignment: Alignment.topCenter,
@@ -58,7 +67,7 @@ class _ResultPageState extends State<ResultPage> {
             SingleChildScrollView(
               child: Container(
                 width: double.infinity,
-                margin: EdgeInsets.all(20),
+                margin: EdgeInsets.zero,
                 decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(16),
@@ -130,7 +139,6 @@ class _ResultPageState extends State<ResultPage> {
                               ),
                             ),
                           ),
-
                           Center(
                             child: Text(
                               "Questions Completed",
@@ -298,10 +306,28 @@ class _ResultPageState extends State<ResultPage> {
                               SizedBox(
                                 width: double.infinity,
                                 child: ElevatedButton(
-                                  onPressed: () {},
+                                  onPressed: () {
+                                    showDialog(
+                                      context: context,
+                                      builder: (context) => AlertDialog(
+                                        title: Text("Coming Soon"),
+                                        content: Text(
+                                          "This feature will be available in a future update.",
+                                        ),
+                                        actions: [
+                                          TextButton(
+                                            onPressed: () =>
+                                                Navigator.pop(context),
+                                            child: Text("OK"),
+                                          ),
+                                        ],
+                                      ),
+                                    );
+                                  },
                                   style: ElevatedButton.styleFrom(
                                     backgroundColor: Color(0xFF7A5DF5),
-                                    padding: EdgeInsets.symmetric(vertical: 14),
+                                    padding:
+                                        EdgeInsets.symmetric(vertical: 14),
                                     shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(12),
                                     ),
@@ -317,16 +343,13 @@ class _ResultPageState extends State<ResultPage> {
                                 width: double.infinity,
                                 child: ElevatedButton(
                                   onPressed: () {
-                                    Navigator.pushReplacement(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (_) => CategoriesPage(),
-                                      ),
-                                    );
+                                    Navigator.popUntil(context,
+                                        (route) => route.settings.name == '/categories');
                                   },
                                   style: ElevatedButton.styleFrom(
                                     backgroundColor: Color(0xFF7A5DF5),
-                                    padding: EdgeInsets.symmetric(vertical: 14),
+                                    padding:
+                                        EdgeInsets.symmetric(vertical: 14),
                                     shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(12),
                                     ),
@@ -347,7 +370,6 @@ class _ResultPageState extends State<ResultPage> {
                 ),
               ),
             ),
-
             if (widget.score > widget.bestScore)
               ConfettiWidget(
                 confettiController: _confettiController,
