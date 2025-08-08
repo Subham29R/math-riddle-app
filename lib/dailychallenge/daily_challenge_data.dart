@@ -24,17 +24,10 @@ final List<DailyChallenge> dailyQuestions = [
   ),
   DailyChallenge(
     question: "",
-<<<<<<< HEAD
     answer: "9",
     imagePath: 'assets/2 (1).jpg',
     hint: "Multiplication",
     solution: "9 × 7 = 63; 9 (ANS)",
-=======
-    answer: "7",
-    imagePath: 'assets/2 (1).jpg',
-    hint: "Multiplication",
-    solution: "9 × 7 = 63; 7 (ANS)",
->>>>>>> 4fdf84c0d4977d0f207eaca1662db8d5ee2820b1
   ),
   DailyChallenge(
     question: "",

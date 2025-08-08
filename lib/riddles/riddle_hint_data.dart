@@ -51,16 +51,8 @@ final List<RiddleHintData> riddleHintList = [
     solution: "5! = 120, 4! = 24...",
   ),
   RiddleHintData(hint: "Cubes of odd numbers.", solution: "7³ = 343."),
-<<<<<<< HEAD
   RiddleHintData(hint: "Reverse and play with it.", solution: "Reverse of 18 is 81."),
   RiddleHintData(hint: "+1,-2 Pattern", solution: "20*2-4 = 36→ANS"),
-=======
-  RiddleHintData(
-    hint: "Reverse and play with it.",
-    solution: "Reverse of 18 is 81.",
-  ),
-  RiddleHintData(hint: "+1,-2 Pattern", solution: "20 - 4 = 16."),
->>>>>>> 4fdf84c0d4977d0f207eaca1662db8d5ee2820b1
   RiddleHintData(hint: "(a+b)-(a-b)", solution: "6 - 4 = 2."),
   RiddleHintData(
     hint: "Think square roots.",

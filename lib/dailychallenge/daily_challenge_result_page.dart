@@ -1,10 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-<<<<<<< HEAD
 import 'package:mathverse/sound_utils.dart';
-=======
->>>>>>> 4fdf84c0d4977d0f207eaca1662db8d5ee2820b1
 
 class DailyChallengeResultPage extends StatefulWidget {
   final int streak;
@@ -12,8 +9,7 @@ class DailyChallengeResultPage extends StatefulWidget {
   const DailyChallengeResultPage({super.key, required this.streak});
 
   @override
-  State<DailyChallengeResultPage> createState() =>
-      _DailyChallengeResultPageState();
+  State<DailyChallengeResultPage> createState() => _DailyChallengeResultPageState();
 }
 
 class _DailyChallengeResultPageState extends State<DailyChallengeResultPage>
@@ -26,10 +22,7 @@ class _DailyChallengeResultPageState extends State<DailyChallengeResultPage>
   @override
   void initState() {
     super.initState();
-<<<<<<< HEAD
     playSoundIfEnabled('sounds/success.mp3');
-=======
->>>>>>> 4fdf84c0d4977d0f207eaca1662db8d5ee2820b1
     _calculateTimeLeft();
     _iconController = AnimationController(
       vsync: this,
@@ -189,10 +182,6 @@ class _DailyChallengeResultPageState extends State<DailyChallengeResultPage>
                       ],
                     ),
                   ),
-<<<<<<< HEAD
-=======
-
->>>>>>> 4fdf84c0d4977d0f207eaca1662db8d5ee2820b1
                   const SizedBox(height: 32),
                   ElevatedButton(
                     onPressed: () => Navigator.pop(context),
