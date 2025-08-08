@@ -211,7 +211,6 @@ class _QuickMathPageState extends State<QuickMathPage> with TickerProviderStateM
   }
 
   void _handleAnswer(int selected) async {
-<<<<<<< HEAD
     if (_showingMilestone) return;
 
     if (selected == _correctAnswer) {
@@ -248,17 +247,16 @@ class _QuickMathPageState extends State<QuickMathPage> with TickerProviderStateM
 
       if (isMilestone) {
         _showingMilestone = true;
-        await Future.delayed(Duration(milliseconds: 200)); // Ensure UI updates
+        await Future.delayed(Duration(milliseconds: 200));
         await Navigator.push(
           context,
           PageRouteBuilder(
             opaque: false,
             barrierDismissible: false,
-            pageBuilder:
-                (_, __, ___) => MilestonePopup(
-                  newTimerValue: newTimerDuration,
-                  level: _score,
-                ),
+            pageBuilder: (_, __, ___) => MilestonePopup(
+              newTimerValue: newTimerDuration,
+              level: _score,
+            ),
           ),
         );
         _showingMilestone = false;
@@ -269,77 +267,16 @@ class _QuickMathPageState extends State<QuickMathPage> with TickerProviderStateM
       _goToResult(
         wasWrong: true,
         question: _question,
-        yourAnswer:
-            _isBooleanQuestion
-                ? (selected == 1 ? "True" : "False")
-                : selected.toString(),
-        correctAnswer:
-            _isBooleanQuestion
-                ? (_correctAnswer == 1 ? "True" : "False")
-                : _correctAnswer.toString(),
+        yourAnswer: _isBooleanQuestion
+            ? (selected == 1 ? "True" : "False")
+            : selected.toString(),
+        correctAnswer: _isBooleanQuestion
+            ? (_correctAnswer == 1 ? "True" : "False")
+            : _correctAnswer.toString(),
         explanation: _explanation,
-=======
-  if (_showingMilestone) return;
-
-  if (selected == _correctAnswer) {
-    int newScore = _score + 1;
-
-    int newTimerDuration;
-    if (newScore <= 10)
-      newTimerDuration = 10;
-    else if (newScore <= 20)
-      newTimerDuration = 9;
-    else if (newScore <= 30)
-      newTimerDuration = 8;
-    else if (newScore <= 40)
-      newTimerDuration = 7;
-    else if (newScore <= 50)
-      newTimerDuration = 6;
-    else
-      newTimerDuration = 5;
-
-    bool isMilestone = [10, 20, 30, 40, 50].contains(newScore);
-
-    _controller.stop();
-
-    setState(() {
-      _score = newScore;
-    });
-
-    if (isMilestone) {
-      _showingMilestone = true;
-
-      await Navigator.push(
-        context,
-        PageRouteBuilder(
-          opaque: false,
-          barrierDismissible: false,
-          pageBuilder: (_, __, ___) => MilestonePopup(
-            newTimerValue: newTimerDuration,
-            level: newScore,
-          ),
-        ),
->>>>>>> 4fdf84c0d4977d0f207eaca1662db8d5ee2820b1
       );
-
-      _showingMilestone = false;
     }
-    _generateQuestion();
-  } else {
-    _goToResult(
-      wasWrong: true,
-      question: _question,
-      yourAnswer: _isBooleanQuestion
-          ? (selected == 1 ? "True" : "False")
-          : selected.toString(),
-      correctAnswer: _isBooleanQuestion
-          ? (_correctAnswer == 1 ? "True" : "False")
-          : _correctAnswer.toString(),
-      explanation: _explanation,
-    );
   }
-}
-
 
   void _goToResult({
     bool wasWrong = false,
@@ -473,28 +410,6 @@ class _QuickMathPageState extends State<QuickMathPage> with TickerProviderStateM
                 ],
               ),
             ),
-<<<<<<< HEAD
-=======
-            Positioned(
-              bottom: 20,
-              left: 0,
-              right: 0,
-              child: Center(
-                child: ScaleTransition(
-                  scale: _hintScaleAnimation,
-                  child: Container(
-                    width: 56,
-                    height: 56,
-                    decoration: BoxDecoration(shape: BoxShape.circle, color: Colors.white),
-                    child: IconButton(
-                      onPressed: () {},
-                      icon: Icon(Icons.lightbulb, color: Color(0xFF7A5DF5)),
-                    ),
-                  ),
-                ),
-              ),
-            ),
->>>>>>> 4fdf84c0d4977d0f207eaca1662db8d5ee2820b1
           ],
         ),
       ),

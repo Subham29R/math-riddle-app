@@ -1,19 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-<<<<<<< HEAD
 import 'hardmath_data.dart';
 import 'hardmath_success_page.dart';
 import 'hardmath_champion_screen.dart';
 import 'package:mathverse/dialog/hint_options_dialog.dart';
 import 'hardmath_hint_data.dart';
-=======
-import 'hardMath_data.dart';
-import 'hardMath_success_page.dart';
-import 'hardmath_champion_screen.dart';
-import 'package:quiz_app/dialog/hint_options_dialog.dart';
-import 'hardMath_hint_data.dart';
->>>>>>> 4fdf84c0d4977d0f207eaca1662db8d5ee2820b1
 
 class HardMathQuizPage extends StatefulWidget {
   final int startIndex;
@@ -33,24 +25,18 @@ class _HardMathQuizPageState extends State<HardMathQuizPage> {
   @override
   void initState() {
     super.initState();
-<<<<<<< HEAD
     _saveLastPlayedProgress();
-=======
->>>>>>> 4fdf84c0d4977d0f207eaca1662db8d5ee2820b1
     _controller.addListener(() {
       setState(() {});
     });
   }
 
-<<<<<<< HEAD
   Future<void> _saveLastPlayedProgress() async {
     final prefs = await SharedPreferences.getInstance();
     await prefs.setString('lastPlayedSection', 'hardMath');
     await prefs.setInt('lastPlayedIndex', widget.startIndex);
   }
 
-=======
->>>>>>> 4fdf84c0d4977d0f207eaca1662db8d5ee2820b1
   Future<void> _checkAnswer() async {
     final userAnswer = _controller.text.trim().toLowerCase();
     final correctAnswer =
@@ -68,7 +54,6 @@ class _HardMathQuizPageState extends State<HardMathQuizPage> {
         await prefs.setInt('hardMath_completed', widget.startIndex + 1);
       }
 
-<<<<<<< HEAD
       if (!mounted) return;
 
       if (widget.startIndex + 1 == 30) {
@@ -86,29 +71,7 @@ class _HardMathQuizPageState extends State<HardMathQuizPage> {
         await Navigator.pushReplacement(
           context,
           MaterialPageRoute(
-            builder: (_) =>
-                HardMathSuccessPage(nextIndex: widget.startIndex + 1),
-=======
-      await Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (_) => HardMathSuccessPage(nextIndex: widget.startIndex + 1),
-        ),
-      );
-
-      if (!mounted) return;
-
-      if (widget.startIndex + 1 == 50) {
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(builder: (_) => MathChampionScreen()),
-        );
-      } else {
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(
-            builder: (_) => HardMathQuizPage(startIndex: widget.startIndex + 1),
->>>>>>> 4fdf84c0d4977d0f207eaca1662db8d5ee2820b1
+            builder: (_) => HardMathSuccessPage(nextIndex: widget.startIndex + 1),
           ),
         );
       }
@@ -136,25 +99,15 @@ class _HardMathQuizPageState extends State<HardMathQuizPage> {
 
   @override
   Widget build(BuildContext context) {
-<<<<<<< HEAD
     final question = hardMathQuestions[widget.startIndex];
     final isScrollable = widget.startIndex >= 20;
 
     final content = Column(
       mainAxisAlignment: MainAxisAlignment.start,
-=======
-    final hardMath = hardMathQuestions[widget.startIndex];
-
-    final isScrollable = widget.startIndex >= 30;
-
-    final content = Column(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
->>>>>>> 4fdf84c0d4977d0f207eaca1662db8d5ee2820b1
       children: [
         Column(
           children: [
             const SizedBox(height: 8),
-<<<<<<< HEAD
             widget.startIndex >= 20 && question.imagePath != null
                 ? ClipRRect(
                     borderRadius: BorderRadius.circular(12),
@@ -178,32 +131,6 @@ class _HardMathQuizPageState extends State<HardMathQuizPage> {
                       ),
                     ),
                   ),
-=======
-            widget.startIndex >= 30 && hardMath.imagePath != null
-                ? ClipRRect(
-                  borderRadius: BorderRadius.circular(12),
-                  child: Image.asset(
-                    hardMath.imagePath!,
-                    fit: BoxFit.contain,
-                    width: double.infinity,
-                    height: 200,
-                  ),
-                )
-                : Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16),
-                  child: Text(
-                    hardMath.question,
-                    textAlign: TextAlign.justify,
-                    style: GoogleFonts.poppins(
-                      fontSize: 19,
-                      fontWeight: FontWeight.w600,
-                      color: Colors.black87,
-                      height: 1.5,
-                    ),
-                  ),
-                ),
-
->>>>>>> 4fdf84c0d4977d0f207eaca1662db8d5ee2820b1
             const SizedBox(height: 16),
             Text(
               _controller.text,
@@ -218,17 +145,13 @@ class _HardMathQuizPageState extends State<HardMathQuizPage> {
           ],
         ),
         const SizedBox(height: 10),
-<<<<<<< HEAD
         const Spacer(),
-=======
->>>>>>> 4fdf84c0d4977d0f207eaca1662db8d5ee2820b1
         Column(
           children: [
             ElevatedButton(
               onPressed: () {
                 showDialog(
                   context: context,
-<<<<<<< HEAD
                   builder: (_) => HintOptionsDialog(
                     hasWatchedHint: hasWatchedHint,
                     onHintAd: () {
@@ -245,37 +168,7 @@ class _HardMathQuizPageState extends State<HardMathQuizPage> {
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.amber,
                 foregroundColor: Colors.white,
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 32, vertical: 12),
-=======
-                  builder:
-                      (_) => HintOptionsDialog(
-                        hasWatchedHint: hasWatchedHint,
-                        onHintAd: () {
-                          setState(() {
-                            hasWatchedHint = true;
-                          });
-                          print("Hint ad triggered");
-                        },
-
-                        onSolutionAd: () {
-                          print("Solution ad triggered");
-                        },
-                        hintText: hardMathHintList[widget.startIndex].hint,
-                        solutionText:
-                            hardMathHintList[widget.startIndex].solution,
-                      ),
-                );
-              },
-
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.amber,
-                foregroundColor: Colors.white,
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 32,
-                  vertical: 12,
-                ),
->>>>>>> 4fdf84c0d4977d0f207eaca1662db8d5ee2820b1
+                padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 12),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(8),
                 ),
@@ -283,21 +176,12 @@ class _HardMathQuizPageState extends State<HardMathQuizPage> {
               child: Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-<<<<<<< HEAD
                   const Icon(Icons.lightbulb, color: Colors.white, size: 20),
                   const SizedBox(width: 8),
-=======
-                  Icon(Icons.lightbulb, color: Colors.white, size: 20),
-                  SizedBox(width: 8),
->>>>>>> 4fdf84c0d4977d0f207eaca1662db8d5ee2820b1
                   Text('Hint', style: GoogleFonts.poppins()),
                 ],
               ),
             ),
-<<<<<<< HEAD
-=======
-
->>>>>>> 4fdf84c0d4977d0f207eaca1662db8d5ee2820b1
             const SizedBox(height: 16),
             Container(
               padding: const EdgeInsets.all(16),
@@ -330,7 +214,6 @@ class _HardMathQuizPageState extends State<HardMathQuizPage> {
                   SizedBox(
                     width: double.infinity,
                     child: ElevatedButton.icon(
-<<<<<<< HEAD
                       onPressed: _controller.text.trim().isEmpty
                           ? null
                           : _checkAnswer,
@@ -338,15 +221,8 @@ class _HardMathQuizPageState extends State<HardMathQuizPage> {
                       label: Text(
                         'Enter',
                         style: GoogleFonts.poppins(
-                            fontWeight: FontWeight.bold),
-=======
-                      onPressed:
-                          _controller.text.trim().isEmpty ? null : _checkAnswer,
-                      icon: const Icon(Icons.check),
-                      label: Text(
-                        'Enter',
-                        style: GoogleFonts.poppins(fontWeight: FontWeight.bold),
->>>>>>> 4fdf84c0d4977d0f207eaca1662db8d5ee2820b1
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                       style: ElevatedButton.styleFrom(
                         backgroundColor: const Color(0xFF7A5DF5),
@@ -387,7 +263,6 @@ class _HardMathQuizPageState extends State<HardMathQuizPage> {
                 children: [
                   IconButton(
                     icon: const Icon(Icons.arrow_back, color: Colors.white),
-<<<<<<< HEAD
                     onPressed: () {
                       Navigator.pop(context);
                     },
@@ -395,13 +270,6 @@ class _HardMathQuizPageState extends State<HardMathQuizPage> {
                   const SizedBox(width: 4),
                   Text(
                     'Question ${widget.startIndex + 1}/30',
-=======
-                    onPressed: () => Navigator.pop(context),
-                  ),
-                  const SizedBox(width: 4),
-                  Text(
-                    'Question ${widget.startIndex + 1}/50',
->>>>>>> 4fdf84c0d4977d0f207eaca1662db8d5ee2820b1
                     style: GoogleFonts.poppins(
                       color: Colors.white,
                       fontSize: 16,
@@ -426,17 +294,14 @@ class _HardMathQuizPageState extends State<HardMathQuizPage> {
               child: Container(
                 width: double.infinity,
                 color: Colors.white,
-<<<<<<< HEAD
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+                padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
                 child: isScrollable
                     ? LayoutBuilder(
                         builder: (context, constraints) {
                           return SingleChildScrollView(
                             physics: const BouncingScrollPhysics(),
                             child: ConstrainedBox(
-                              constraints:
-                                  BoxConstraints(minHeight: constraints.maxHeight),
+                              constraints: BoxConstraints(minHeight: constraints.maxHeight),
                               child: IntrinsicHeight(child: content),
                             ),
                           );
@@ -445,16 +310,6 @@ class _HardMathQuizPageState extends State<HardMathQuizPage> {
                     : Column(
                         children: [Expanded(child: content)],
                       ),
-=======
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 24,
-                  vertical: 16,
-                ),
-                child:
-                    isScrollable
-                        ? SingleChildScrollView(child: content)
-                        : content,
->>>>>>> 4fdf84c0d4977d0f207eaca1662db8d5ee2820b1
               ),
             ),
           ],
@@ -481,16 +336,9 @@ class _HardMathQuizPageState extends State<HardMathQuizPage> {
           ),
           padding: const EdgeInsets.symmetric(vertical: 4),
         ),
-<<<<<<< HEAD
         child: icon != null
             ? Icon(icon)
             : Text(value, style: GoogleFonts.poppins(fontSize: 18)),
-=======
-        child:
-            icon != null
-                ? Icon(icon)
-                : Text(value, style: GoogleFonts.poppins(fontSize: 18)),
->>>>>>> 4fdf84c0d4977d0f207eaca1662db8d5ee2820b1
       ),
     );
   }

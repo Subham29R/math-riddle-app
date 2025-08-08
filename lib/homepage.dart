@@ -4,12 +4,11 @@ import 'package:google_fonts/google_fonts.dart';
 import 'categories_page.dart';
 import 'settings_page.dart';
 import 'dailychallenge/daily_challenge_page.dart';
-<<<<<<< HEAD
 import 'package:shared_preferences/shared_preferences.dart';
 import 'hardmaths/hardmath_quiz_page.dart';
 import 'package:mathverse/riddles/riddle_quiz_page.dart';
-=======
->>>>>>> 4fdf84c0d4977d0f207eaca1662db8d5ee2820b1
+import 'package:url_launcher/url_launcher.dart';
+import 'package:share_plus/share_plus.dart';
 
 class HomePage extends StatelessWidget {
   final buttonTextStyle = GoogleFonts.poppins(
@@ -17,6 +16,148 @@ class HomePage extends StatelessWidget {
     fontWeight: FontWeight.bold,
     color: Colors.white,
   );
+
+  // Placeholder URLs - update these when your app is hosted
+  static const String _appStoreUrl = 'https://apps.apple.com/app/your-app-id';
+  static const String _playStoreUrl = 'https://play.google.com/store/apps/details?id=com.example.mathverse';
+  static const String _appWebsite = 'https://your-app-website.com';
+
+  void _shareApp(BuildContext context) {
+    try {
+      Share.share(
+        'Check out MathVerse - an amazing math riddle and speed challenge app! 🧮✨\n\n'
+        'Download now: $_appWebsite\n\n'
+        'Challenge your mind with:\n'
+        '• Quick Maths - Fast-paced arithmetic\n'
+        '• Riddles - Brain teasers & logic puzzles\n'
+        '• Hard Maths - Advanced mathematical problems\n'
+        '• Daily Challenges - New puzzles every day\n\n'
+        '#MathVerse #MathGames #BrainTraining',
+        subject: 'MathVerse - Math Riddles & Speed Challenges',
+      );
+    } catch (e) {
+      // Show error dialog if sharing fails
+      showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+          backgroundColor: const Color(0xFFF3F0FE),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(20),
+          ),
+          title: Text(
+            'Unable to Share',
+            style: GoogleFonts.poppins(
+              fontWeight: FontWeight.bold,
+              fontSize: 20,
+              color: Colors.black87,
+            ),
+          ),
+          content: Text(
+            'Please try sharing again or copy the app link manually.',
+            style: GoogleFonts.poppins(fontSize: 16),
+          ),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.pop(context),
+              child: Text(
+                'OK',
+                style: GoogleFonts.poppins(
+                  fontWeight: FontWeight.bold,
+                  color: Color(0xFF7A5DF5),
+                ),
+              ),
+            ),
+          ],
+        ),
+      );
+    }
+  }
+
+  void _rateApp(BuildContext context) async {
+    try {
+      // Try to open the appropriate store based on platform
+      final Uri url;
+      if (Theme.of(context).platform == TargetPlatform.iOS) {
+        url = Uri.parse(_appStoreUrl);
+      } else {
+        url = Uri.parse(_playStoreUrl);
+      }
+
+      if (await canLaunchUrl(url)) {
+        await launchUrl(url, mode: LaunchMode.externalApplication);
+      } else {
+        // Fallback: show a dialog with the URL
+        showDialog(
+          context: context,
+          builder: (context) => AlertDialog(
+            backgroundColor: const Color(0xFFF3F0FE),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(20),
+            ),
+            title: Text(
+              'Rate MathVerse',
+              style: GoogleFonts.poppins(
+                fontWeight: FontWeight.bold,
+                fontSize: 20,
+                color: Colors.black87,
+              ),
+            ),
+            content: Text(
+              'Please visit our store page to rate the app:\n\n$url',
+              style: GoogleFonts.poppins(fontSize: 16),
+            ),
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.pop(context),
+                child: Text(
+                  'OK',
+                  style: GoogleFonts.poppins(
+                    fontWeight: FontWeight.bold,
+                    color: Color(0xFF7A5DF5),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        );
+      }
+    } catch (e) {
+      // Show error dialog if something goes wrong
+      showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+          backgroundColor: const Color(0xFFF3F0FE),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(20),
+          ),
+          title: Text(
+            'Unable to Open Store',
+            style: GoogleFonts.poppins(
+              fontWeight: FontWeight.bold,
+              fontSize: 20,
+              color: Colors.black87,
+            ),
+          ),
+          content: Text(
+            'Please manually search for "MathVerse" in your app store to rate us.',
+            style: GoogleFonts.poppins(fontSize: 16),
+          ),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.pop(context),
+              child: Text(
+                'OK',
+                style: GoogleFonts.poppins(
+                  fontWeight: FontWeight.bold,
+                  color: Color(0xFF7A5DF5),
+                ),
+              ),
+            ),
+          ],
+        ),
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -151,23 +292,7 @@ class HomePage extends StatelessWidget {
                   },
                   icon: Icons.play_circle_fill,
                   label: 'Play',
-<<<<<<< HEAD
                   color: Color(0xFF43A047),
-=======
-                  color: Colors.green,
-                ),
-                SizedBox(height: 15),
-                _buildAnimatedButton(
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => DailyChallengePage()),
-                    );
-                  },
-                  icon: Icons.calendar_today,
-                  label: 'Daily Challenge',
-                  color: Colors.blue,
->>>>>>> 4fdf84c0d4977d0f207eaca1662db8d5ee2820b1
                 ),
                 SizedBox(height: 15),
                 _buildAnimatedButton(
@@ -200,16 +325,6 @@ class HomePage extends StatelessWidget {
                 ),
                 SizedBox(height: 15),
                 _buildAnimatedButton(
-<<<<<<< HEAD
-=======
-                  onPressed: () {},
-                  icon: Icons.lock,
-                  label: 'Premium',
-                  color: Colors.amber,
-                ),
-                SizedBox(height: 15),
-                _buildAnimatedButton(
->>>>>>> 4fdf84c0d4977d0f207eaca1662db8d5ee2820b1
                   onPressed: () {
                     Navigator.push(
                       context,
@@ -308,7 +423,7 @@ class HomePage extends StatelessWidget {
                   children: [
                     Expanded(
                       child: ElevatedButton.icon(
-                        onPressed: () {},
+                        onPressed: () => _rateApp(context),
                         icon: Icon(Icons.star, color: Colors.white),
                         label: Text(
                           'Rate Us',
@@ -329,7 +444,7 @@ class HomePage extends StatelessWidget {
                     const SizedBox(width: 16),
                     Expanded(
                       child: ElevatedButton.icon(
-                        onPressed: () {},
+                        onPressed: () => _shareApp(context),
                         icon: Icon(Icons.share, color: Colors.white),
                         label: Text(
                           'Share',
@@ -360,32 +475,31 @@ class HomePage extends StatelessWidget {
   void _showCompletedDialog(BuildContext context) {
     showDialog(
       context: context,
-      builder:
-          (context) => AlertDialog(
-            title: Text(
-              "You’re a Champion!",
-              style: GoogleFonts.poppins(fontWeight: FontWeight.bold),
-            ),
-            content: Text(
-              "You’ve completed all questions. Explore more in Categories!",
-              style: GoogleFonts.poppins(),
-            ),
-            actions: [
-              TextButton(
-                onPressed: () {
-                  Navigator.pop(context);
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (_) => CategoriesPage(),
-                      settings: RouteSettings(name: '/categories'),
-                    ),
-                  );
-                },
-                child: Text("Go to Categories", style: GoogleFonts.poppins()),
-              ),
-            ],
+      builder: (context) => AlertDialog(
+        title: Text(
+          "You’re a Champion!",
+          style: GoogleFonts.poppins(fontWeight: FontWeight.bold),
+        ),
+        content: Text(
+          "You’ve completed all questions. Explore more in Categories!",
+          style: GoogleFonts.poppins(),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () {
+              Navigator.pop(context);
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (_) => CategoriesPage(),
+                  settings: RouteSettings(name: '/categories'),
+                ),
+              );
+            },
+            child: Text("Go to Categories", style: GoogleFonts.poppins()),
           ),
+        ],
+      ),
     );
   }
 

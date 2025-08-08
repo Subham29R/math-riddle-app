@@ -1,11 +1,6 @@
 import 'package:flutter/material.dart';
-<<<<<<< HEAD
 import 'package:mathverse/hardmaths/hardmath_page.dart';
 import 'package:mathverse/riddles/riddles_page.dart';
-=======
-import 'package:quiz_app/hardmaths/hardmath_page.dart';
-import 'package:quiz_app/riddles/riddles_page.dart';
->>>>>>> 4fdf84c0d4977d0f207eaca1662db8d5ee2820b1
 import 'quick_math_countdown.dart';
 import 'animated_play_button.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -251,7 +246,6 @@ class CategoriesPage extends StatelessWidget {
                       SizedBox(
                         width: double.infinity,
                         child: AnimatedPlayButton(
-<<<<<<< HEAD
                           onPressed: () async {
                             final prefs = await SharedPreferences.getInstance();
                             final completed =
@@ -288,13 +282,6 @@ class CategoriesPage extends StatelessWidget {
                                 ),
                               );
                             }
-=======
-                          onPressed: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(builder: (_) => HardMathsPage()),
-                            );
->>>>>>> 4fdf84c0d4977d0f207eaca1662db8d5ee2820b1
                           },
 
                           color: Colors.red,
